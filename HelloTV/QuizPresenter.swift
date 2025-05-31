@@ -20,11 +20,11 @@ class QuizPresenter: ObservableObject {
                 return
             }
             do {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
-                let decoded = try decoder.decode(Quiz.self, from: data)
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.dateDecodingStrategy = .iso8601
+                let decodedQuiz = try jsonDecoder.decode(Quiz.self, from: data)
                 DispatchQueue.main.async {
-                    self.quiz = decoded
+                    self.quiz = decodedQuiz
                 }
             } catch {
                 debugPrint("Decoding error:", error)

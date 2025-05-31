@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct QuizView: View {
     @StateObject var presenter = QuizPresenter()
     
     var body: some View {
@@ -33,5 +33,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    QuizView()
 }

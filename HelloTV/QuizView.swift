@@ -10,6 +10,8 @@ import SwiftUI
 struct QuizView: View {
     @StateObject var presenter = QuizPresenter()
     
+    @FocusState private var isFocused: Bool
+
     var body: some View {
         VStack {
             Image(systemName: "appletv")
@@ -22,13 +24,31 @@ struct QuizView: View {
             Text("We’ve been expecting you")
                 .font(.caption)
             if let quiz = presenter.quiz {
-                Text(quiz.title)
+                Text(quiz.questions.first?.question ?? "No question found")
                     .font(.title2)
                     .padding()
             }
         }
+        .focusable()
+        .focused($isFocused)
         .padding()
-        .onAppear(perform: presenter.fetchQuiz)
+        .onAppear {
+            isFocused = true
+            presenter.start()
+        }
+        .onMoveCommand(perform: { direction in
+                    debugPrint("move \(direction)")
+                })
+//        .onMoveCommand { direction in
+//            switch direction {
+//            case .left:
+//                debugPrint("Left pressed")
+//            case .right:
+//                debugPrint("Right pressed")
+//            default:
+//                break
+//            }
+//        }
     }
 }
 

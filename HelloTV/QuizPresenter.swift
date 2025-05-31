@@ -10,12 +10,13 @@ import SwiftUI
 
 class QuizPresenter: ObservableObject {
     @Published var quiz: Quiz?
-
-    func fetchQuiz() {
+    
+    func start() {
         guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz") else { return }
+        debugPrint("Requesting quiz data from \(url)")
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else {
-                print("Fetch error:", error ?? "Unknown error")
+                debugPrint("Fetch error:", error ?? "Unknown error")
                 return
             }
             do {
@@ -26,7 +27,7 @@ class QuizPresenter: ObservableObject {
                     self.quiz = decoded
                 }
             } catch {
-                print("Decoding error:", error)
+                debugPrint("Decoding error:", error)
             }
         }.resume()
     }

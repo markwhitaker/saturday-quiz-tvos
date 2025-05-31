@@ -36,19 +36,16 @@ struct QuizView: View {
             isFocused = true
             presenter.start()
         }
-        .onMoveCommand(perform: { direction in
-                    debugPrint("move \(direction)")
-                })
-//        .onMoveCommand { direction in
-//            switch direction {
-//            case .left:
-//                debugPrint("Left pressed")
-//            case .right:
-//                debugPrint("Right pressed")
-//            default:
-//                break
-//            }
-//        }
+        .onMoveCommand { direction in
+            switch direction {
+            case .left:
+                debugPrint("Left pressed")
+            case .right:
+                debugPrint("Right pressed")
+            default:
+                break
+            }
+        }
     }
 }
 

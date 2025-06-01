@@ -31,12 +31,14 @@ struct QuizView: View, QuizViewing {
             GridRow {
                 Text("1.")
                 Text("Question goes here even if it's a very very large question in which case the text will wrap...")
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             .font(.system(size: 64, weight: .light))
 
             GridRow {
                 Color.clear.frame(width: 0, height: 0)
                 Text("Answer goes here...")
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             .font(.system(size: 64, weight: .light))
             .foregroundStyle(.yellow)
@@ -59,10 +61,11 @@ struct QuizView: View, QuizViewing {
                 }
             }
         }
+        .background(.black)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .focusable()
         .focused($isFocused)
-        .padding()
+        .padding(.zero)
         .onAppear {
             isFocused = true
             presenter.onViewReady(view: self)

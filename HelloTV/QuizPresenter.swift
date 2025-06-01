@@ -8,10 +8,18 @@
 
 import SwiftUI
 
-class QuizPresenter: ObservableObject {
+protocol QuizPresenting {
+    func onViewReady(view: QuizViewing)
+}
+
+class QuizPresenter: QuizPresenting {
     @Published var quiz: Quiz?
     
-    func start() {
+    private var view: QuizViewing?
+    
+    func onViewReady(view: QuizViewing) {
+        self.view = view
+        
         guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz") else { return }
         debugPrint("Requesting quiz data from \(url)")
         URLSession.shared.dataTask(with: url) { data, response, error in

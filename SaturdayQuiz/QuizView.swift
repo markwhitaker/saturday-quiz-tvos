@@ -11,7 +11,7 @@ protocol QuizViewing {
 }
 
 struct QuizView: View, QuizViewing {
-    var presenter: any QuizPresenting = QuizPresenter()
+    @StateObject var presenter = QuizPresenter()
 
     @FocusState private var isFocused: Bool
 
@@ -68,7 +68,6 @@ struct QuizView: View, QuizViewing {
         .padding(.zero)
         .onAppear {
             isFocused = true
-            presenter.onViewReady(view: self)
         }
         .onMoveCommand { direction in
             switch direction {

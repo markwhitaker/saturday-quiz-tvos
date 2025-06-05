@@ -12,5 +12,5 @@ struct Quiz: Decodable {
     let id: String
     let date: Date
     let title: String
-    let questions: [QuizQuestion]
+    let questions: [Question]
 }

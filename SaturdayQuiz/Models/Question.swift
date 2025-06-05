@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct QuizQuestion: Decodable {
+struct Question: Decodable {
     let number: Int
     let question: String
     let answer: String

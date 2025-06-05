@@ -1,6 +1,6 @@
 //
 //  QuestionType.swift
-//  HelloTV
+//  SaturdayQuiz
 //
 //  Created by Mark Whitaker on 31/05/2025.
 //

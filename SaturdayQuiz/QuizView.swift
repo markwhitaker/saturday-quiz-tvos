@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  HelloTV
+//  SaturdayQuiz
 //
 //  Created by Mark Whitaker on 31/05/2025.
 //
@@ -12,7 +12,7 @@ protocol QuizViewing {
 
 struct QuizView: View, QuizViewing {
     var presenter: any QuizPresenting = QuizPresenter()
-    
+
     @FocusState private var isFocused: Bool
 
     var body: some View {
@@ -42,19 +42,19 @@ struct QuizView: View, QuizViewing {
             }
             .font(.system(size: 64, weight: .light))
             .foregroundStyle(.yellow)
-            
+
             GridRow {
                 VStack {
                     Spacer()
                 }
             }
-            
+
             GridRow {
                 ZStack {
                     Circle()
                         .stroke(Color.yellow, lineWidth: 5)
                         .frame(width: 100, height: 100)
-                        
+
                     Image(systemName: "checkmark")
                         .font(.system(size: 48, weight: .bold))
                         .foregroundColor(.yellow)

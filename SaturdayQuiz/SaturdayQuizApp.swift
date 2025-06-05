@@ -1,6 +1,6 @@
 //
-//  HelloTVApp.swift
-//  HelloTV
+//  SaturdayQuizApp.swift
+//  SaturdayQuiz
 //
 //  Created by Mark Whitaker on 31/05/2025.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct HelloTVApp: App {
+struct SaturdayQuizApp: App {
     var body: some Scene {
         WindowGroup {
             QuizView()

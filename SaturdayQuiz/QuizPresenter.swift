@@ -1,6 +1,6 @@
 //
 //  QuizPresenter.swift
-//  HelloTV
+//  SaturdayQuiz
 //
 //  Created by Mark Whitaker on 31/05/2025.
 //
@@ -14,12 +14,12 @@ protocol QuizPresenting {
 
 class QuizPresenter: QuizPresenting {
     @Published var quiz: Quiz?
-    
+
     private var view: QuizViewing?
-    
+
     func onViewReady(view: QuizViewing) {
         self.view = view
-        
+
         guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz") else { return }
         debugPrint("Requesting quiz data from \(url)")
         URLSession.shared.dataTask(with: url) { data, response, error in

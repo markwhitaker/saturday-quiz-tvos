@@ -63,6 +63,7 @@ class QuizPresenter : ObservableObject {
                     
                     self.quiz = decodedQuiz
                     self.buildScenes()
+                    self.next()
                 } catch {
                     debugPrint("Failed to decode quiz: \(error.localizedDescription)")
                 }

@@ -25,16 +25,9 @@ enum ScoreState: Double {
 
 class QuizPresenter : ObservableObject {
     private var quiz: Quiz? = nil
-    @Published var questions: [Question] = []
-    @Published var currentIndex = 0
-    @Published var scores: [ScoreState] = []
+//    @Published var scores: [ScoreState] = []
     @Published var scenes: [QuizScene] = [.loading]
     @Published var sceneIndex = 0
-    
-    var currentQuestion: Question? {
-        guard currentIndex < questions.count else { return nil }
-        return questions[currentIndex]
-    }
     
     var currentScene: QuizScene {
         return scenes[sceneIndex]

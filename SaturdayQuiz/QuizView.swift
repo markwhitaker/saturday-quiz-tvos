@@ -40,7 +40,13 @@ struct QuizView: View {
                 case .answersTitle:
                     AnswersTitleView()
                 case .questionAnswer(let number, let type, let question, let answer):
-                    QuestionAndAnswerView(number: number, type: type, question: question, answer: answer)
+                    QuestionAndAnswerView(
+                        number: number,
+                        type: type,
+                        question: question,
+                        answer: answer,
+                        score: presenter.scores[number - 1]
+                    )
                 case .results:
                     Text("Results...")
                 }
@@ -65,6 +71,11 @@ struct QuizView: View {
                 presenter.next()
             default:
                 break
+            }
+        }
+        .onPlayPauseCommand {
+            if case .questionAnswer(let number, _, _, _) = presenter.currentScene {
+                presenter.cycleScore(for: number)
             }
         }
     }
@@ -162,11 +173,13 @@ struct QuestionAndAnswerView: View {
     let isWhatLinks: Bool
     let question: String
     let answer: String
+    let score: ScoreState
     
-    init(number: Int, type: QuestionType, question: String, answer: String) {
+    init(number: Int, type: QuestionType, question: String, answer: String, score: ScoreState) {
         self.number = number
         self.question = question
         self.answer = answer
+        self.score = score
         self.isWhatLinks = type == .whatLinks
     }
     
@@ -210,19 +223,41 @@ struct QuestionAndAnswerView: View {
             }
 
             GridRow {
-                ZStack {
-                    Circle()
-                        .stroke(Color.gray, lineWidth: 3)
-                        .frame(width: 80, height: 80)
-
-                    Image(systemName: "checkmark")
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundColor(.yellow)
-                }
+                ScoreIndicatorView(score: score)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
+    }
+}
+
+struct ScoreIndicatorView: View {
+    let score: ScoreState
+    
+    var body: some View {
+        ZStack {
+            switch score {
+            case .none:
+                Circle()
+                    .stroke(Color.gray, lineWidth: 3)
+                    .frame(width: 80, height: 80)
+            case .full:
+                Circle()
+                    .stroke(Color.yellow, lineWidth: 3)
+                    .fill(Color.yellow)
+                    .frame(width: 80, height: 80)
+                Image(systemName: "checkmark")
+                    .font(.system(size: 40, weight: .bold))
+                    .foregroundColor(.black)
+            case .half:
+                Circle()
+                    .stroke(Color.gray, lineWidth: 3)
+                    .frame(width: 80, height: 80)
+                Image(systemName: "checkmark")
+                    .font(.system(size: 40, weight: .bold))
+                    .foregroundColor(.yellow)
+            }
+        }
     }
 }
 
@@ -249,7 +284,7 @@ struct QuestionAndAnswerView: View {
 
 #Preview("Question view: what links") {
     ZStack {
-        QuestionView(number: 4, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin’s pubs; Wardle and Makin’s shops?")
+        QuestionView(number: 4, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin's pubs; Wardle and Makin's shops?")
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 }
@@ -263,15 +298,14 @@ struct QuestionAndAnswerView: View {
 
 #Preview("Question/answer view: normal") {
     ZStack {
-        QuestionAndAnswerView(number: 4, type: .normal, question: "Which sci-fi writer was the first person in Europe to buy a Mac computer?", answer: "Douglas Adams (Stephen Fry was the second)")
+        QuestionAndAnswerView(number: 4, type: .normal, question: "Which sci-fi writer was the first person in Europe to buy a Mac computer?", answer: "Douglas Adams (Stephen Fry was the second)", score: .full)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 }
 
 #Preview("Question/answer view: what links") {
     ZStack {
-        QuestionAndAnswerView(number: 4, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin’s pubs; Wardle and Makin’s shops?", answer: "JD: JD Vance; JD Salinger; JD Wetherspoon; JD Sports")
+        QuestionAndAnswerView(number: 4, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin's pubs; Wardle and Makin's shops?", answer: "JD: JD Vance; JD Salinger; JD Wetherspoon; JD Sports", score: .half)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 }
-

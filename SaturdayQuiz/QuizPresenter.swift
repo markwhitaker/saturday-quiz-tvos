@@ -21,6 +21,17 @@ enum ScoreState: Double {
     case none = 0.0
     case half = 0.5
     case full = 1.0
+
+    func next() -> ScoreState {
+        switch self {
+        case .none:
+            return .full
+        case .full:
+            return .half
+        case .half:
+            return .none
+        }
+    }
 }
 
 class QuizPresenter : ObservableObject {
@@ -68,7 +79,7 @@ class QuizPresenter : ObservableObject {
         if (self.quiz == nil) {
             return
         }
-
+        
         self.scenes.append(.ready(self.quiz!.date))
         for question in quiz!.questions {
             self.scenes.append(.question(question.number, question.type, question.question))
@@ -82,7 +93,7 @@ class QuizPresenter : ObservableObject {
         
         self.scenes.remove(at: 0)
     }
-
+    
     func next() {
         if (self.sceneIndex < self.scenes.count - 1) {
             sceneIndex += 1
@@ -92,6 +103,13 @@ class QuizPresenter : ObservableObject {
     func previous() {
         if (self.sceneIndex > 0) {
             sceneIndex -= 1
+        }
+    }
+    
+    func cycleScore(for questionNumber: Int) {
+        let index = questionNumber - 1
+        if index >= 0 && index < scores.count {
+            scores[index] = scores[index].next()
         }
     }
 }

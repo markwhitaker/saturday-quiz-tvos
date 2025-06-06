@@ -12,6 +12,9 @@ struct SaturdayQuizApp: App {
     var body: some Scene {
         WindowGroup {
             QuizView()
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                    exit(0)
+                }
         }
     }
 }

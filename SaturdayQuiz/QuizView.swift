@@ -48,7 +48,7 @@ struct QuizView: View {
                         score: presenter.scores[number - 1]
                     )
                 case .results:
-                    Text("Results...")
+                    ResultsView(score: presenter.totalScore)
                 }
             }
             .foregroundStyle(.white)
@@ -261,6 +261,37 @@ struct ScoreIndicatorView: View {
     }
 }
 
+struct ResultsView: View {
+    let scoreString: String
+    
+    init(score: Double) {
+        var s = "\(Int(score))"
+        if (score.rounded(.down) < score) {
+            s.append("½")
+        }
+        scoreString = s
+    }
+    
+    var body: some View {
+        ZStack {
+            Text("End")
+                .font(.custom("Open Sans", size: FontSize.title))
+                .fontWeight(.thin)
+                .foregroundColor(.white)
+
+            Text("Score: \(scoreString)")
+                .font(.custom("Open Sans", size: FontSize.date))
+                .fontWeight(.thin)
+                .foregroundColor(.yellow)
+                .padding(.top, 250)
+                .textCase(.uppercase)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    }
+}
+
+
+
 #Preview("Loading view") {
     ZStack {
         LoadingView()
@@ -306,6 +337,13 @@ struct ScoreIndicatorView: View {
 #Preview("Question/answer view: what links") {
     ZStack {
         QuestionAndAnswerView(number: 4, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin's pubs; Wardle and Makin's shops?", answer: "JD: JD Vance; JD Salinger; JD Wetherspoon; JD Sports", score: .half)
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+}
+
+#Preview("Results view") {
+    ZStack {
+        ResultsView(score: 10.5)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 }

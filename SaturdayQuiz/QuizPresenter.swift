@@ -14,7 +14,7 @@ enum QuizScene {
     case question(Int, QuestionType, String)
     case answersTitle
     case questionAnswer(Int, QuestionType, String, String)
-    case results
+    case results(Double)
 }
 
 enum ScoreState: Double {
@@ -42,6 +42,10 @@ class QuizPresenter : ObservableObject {
     
     var currentScene: QuizScene {
         return scenes[sceneIndex]
+    }
+    
+    var totalScore: Double {
+        return scores.map(\.rawValue).reduce(0, +)
     }
     
     func onViewReady() {
@@ -89,7 +93,7 @@ class QuizPresenter : ObservableObject {
             self.scenes.append(.question(question.number, question.type, question.question))
             self.scenes.append(.questionAnswer(question.number, question.type, question.question, question.answer))
         }
-        self.scenes.append(.results)
+        self.scenes.append(.results(totalScore))
         
         self.scenes.remove(at: 0)
     }

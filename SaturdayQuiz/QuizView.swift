@@ -226,20 +226,52 @@ struct QuestionAndAnswerView: View {
     }
 }
 
-#Preview {
+#Preview("Loading view") {
     ZStack {
-//        LoadingView()
-
-//        ReadyView(date: Date())
-    
-//        QuestionView(number: 4, type: .normal, question: "Which sci-fi writer was the first person in Europe to buy a Mac computer?")
-    
-//        QuestionView(number: 10, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin’s pubs; Wardle and Makin’s shops?")
-        
-//        AnswersTitleView()
-
-        QuestionAndAnswerView(number: 10, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin’s pubs; Wardle and Makin’s shops?", answer: "JD: JD Vance; JD Salinger; JD Wetherspoon; JD Sports")
-        
+        LoadingView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 }
+
+#Preview("Ready view") {
+    ZStack {
+        ReadyView(date: Date())
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+}
+
+#Preview("Question view: normal") {
+    ZStack {
+        QuestionView(number: 4, type: .normal, question: "Which sci-fi writer was the first person in Europe to buy a Mac computer?")
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+}
+
+#Preview("Question view: what links") {
+    ZStack {
+        QuestionView(number: 4, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin’s pubs; Wardle and Makin’s shops?")
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+}
+
+#Preview("Answers title view") {
+    ZStack {
+        AnswersTitleView()
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+}
+
+#Preview("Question/answer view: normal") {
+    ZStack {
+        QuestionAndAnswerView(number: 4, type: .normal, question: "Which sci-fi writer was the first person in Europe to buy a Mac computer?", answer: "Douglas Adams (Stephen Fry was the second)")
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+}
+
+#Preview("Question/answer view: what links") {
+    ZStack {
+        QuestionAndAnswerView(number: 4, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin’s pubs; Wardle and Makin’s shops?", answer: "JD: JD Vance; JD Salinger; JD Wetherspoon; JD Sports")
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+}
+

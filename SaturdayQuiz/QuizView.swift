@@ -25,6 +25,13 @@ struct Dimensions {
     static let whatLinksSpacing: CGFloat = 10
 }
 
+struct Colors {
+    static let text = Color(red: 221/255, green: 221/255, blue: 221/255)
+    static let highlight = Color(red: 255/255, green: 221/255, blue: 0/255)
+    static let midGray = Color(red: 102/255, green: 102/255, blue: 102/255)
+    static let darkGray = Color(red: 68/255, green: 68/255, blue: 68/255)
+}
+
 struct QuizView: View {
     @StateObject var presenter = QuizPresenter()
 
@@ -62,7 +69,7 @@ struct QuizView: View {
                     ResultsView(score: presenter.totalScore)
                 }
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(Colors.text)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
         }
@@ -113,14 +120,14 @@ struct ReadyView: View {
             Text(date)
                 .font(.custom("Open Sans", size: FontSize.date))
                 .fontWeight(.thin)
-                .foregroundColor(.yellow)
+                .foregroundColor(Colors.highlight)
                 .padding(.bottom, 400)
                 .textCase(.uppercase)
             
             Text("Ready?")
                 .font(.custom("Open Sans", size: FontSize.title))
                 .fontWeight(.thin)
-                .foregroundColor(.white)
+                .foregroundColor(Colors.text)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
@@ -148,7 +155,7 @@ struct QuestionView: View {
                 }
                 .font(.custom("Open Sans", size: FontSize.whatLinks))
                 .fontWeight(.black)
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Colors.midGray)
                 .opacity(isWhatLinks ? 1 : 0)
             }
 
@@ -160,6 +167,7 @@ struct QuestionView: View {
             }
             .font(.custom("Open Sans", size: FontSize.body))
             .fontWeight(.light)
+            .foregroundStyle(Colors.text)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(Dimensions.outerSpacing)
@@ -172,7 +180,7 @@ struct AnswersTitleView: View {
             Text("Answers")
                 .font(.custom("Open Sans", size: FontSize.title))
                 .fontWeight(.thin)
-                .foregroundColor(.white)
+                .foregroundColor(Colors.text)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
@@ -204,7 +212,7 @@ struct QuestionAndAnswerView: View {
                 }
                 .font(.custom("Open Sans", size: FontSize.whatLinks))
                 .fontWeight(.black)
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Colors.midGray)
                 .opacity(isWhatLinks ? 1 : 0)
             }
 
@@ -216,6 +224,7 @@ struct QuestionAndAnswerView: View {
             }
             .font(.custom("Open Sans", size: FontSize.body))
             .fontWeight(.light)
+            .foregroundStyle(Colors.text)
 
             GridRow {
                 Color.clear.frame(width: 0, height: 0)
@@ -224,7 +233,7 @@ struct QuestionAndAnswerView: View {
             }
             .font(.custom("Open Sans", size: FontSize.body))
             .fontWeight(.light)
-            .foregroundStyle(.yellow)
+            .foregroundStyle(Colors.highlight)
 
             GridRow {
                 VStack {
@@ -249,23 +258,23 @@ struct ScoreIndicatorView: View {
             switch score {
             case .none:
                 Circle()
-                    .stroke(Color.gray, lineWidth: Dimensions.scoreCircleBorder)
+                    .stroke(Colors.darkGray, lineWidth: Dimensions.scoreCircleBorder)
                     .frame(width: Dimensions.scoreCircle, height: Dimensions.scoreCircle)
             case .full:
                 Circle()
-                    .stroke(Color.yellow, lineWidth: Dimensions.scoreCircleBorder)
-                    .fill(Color.yellow)
+                    .stroke(Colors.highlight, lineWidth: Dimensions.scoreCircleBorder)
+                    .fill(Colors.highlight)
                     .frame(width: Dimensions.scoreCircle, height: Dimensions.scoreCircle)
                 Image(systemName: "checkmark")
                     .font(.system(size: Dimensions.scoreTick, weight: .bold))
                     .foregroundColor(.black)
             case .half:
                 Circle()
-                    .stroke(Color.gray, lineWidth: Dimensions.scoreCircleBorder)
+                    .stroke(Colors.darkGray, lineWidth: Dimensions.scoreCircleBorder)
                     .frame(width: Dimensions.scoreCircle, height: Dimensions.scoreCircle)
                 Image(systemName: "checkmark")
                     .font(.system(size: Dimensions.scoreTick, weight: .bold))
-                    .foregroundColor(.yellow)
+                    .foregroundColor(Colors.highlight)
             }
         }
     }
@@ -287,12 +296,12 @@ struct ResultsView: View {
             Text("End")
                 .font(.custom("Open Sans", size: FontSize.title))
                 .fontWeight(.thin)
-                .foregroundColor(.white)
+                .foregroundColor(Colors.text)
 
             Text("Total score: \(scoreString)")
                 .font(.custom("Open Sans", size: FontSize.score))
                 .fontWeight(.thin)
-                .foregroundColor(.yellow)
+                .foregroundColor(Colors.highlight)
                 .padding(.top, 300)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)

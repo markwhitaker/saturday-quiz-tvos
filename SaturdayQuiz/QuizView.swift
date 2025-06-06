@@ -9,9 +9,20 @@ import SwiftUI
 
 struct FontSize {
     static let title: CGFloat = 120
-    static let body: CGFloat = 75
+    static let body: CGFloat = 70
     static let whatLinks: CGFloat = 35
     static let date: CGFloat = 50
+    static let score: CGFloat = 60
+}
+
+struct Dimensions {
+    static let numberWidth: CGFloat = 150
+    static let gridSpacing: CGFloat = 20
+    static let outerSpacing: CGFloat = 40
+    static let scoreCircle: CGFloat = 100
+    static let scoreTick: CGFloat = 50
+    static let scoreCircleBorder: CGFloat = 3
+    static let whatLinksSpacing: CGFloat = 10
 }
 
 struct QuizView: View {
@@ -58,7 +69,6 @@ struct QuizView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .focusable()
         .focused($isFocused)
-        .padding(.zero)
         .onAppear {
             presenter.onViewReady()
             isFocused = true
@@ -128,10 +138,10 @@ struct QuestionView: View {
     }
     
     var body: some View {
-        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 20) {
+        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: Dimensions.gridSpacing) {
             GridRow {
                 Color.clear.frame(width: 0, height: 0)
-                HStack(spacing: 10) {
+                HStack(spacing: Dimensions.whatLinksSpacing) {
                     Image(systemName: "link")
                     Text("What links")
                         .textCase(.uppercase)
@@ -144,7 +154,7 @@ struct QuestionView: View {
 
             GridRow {
                 Text("\(number).")
-                    .frame(width: 150, alignment: .topLeading)
+                    .frame(width: Dimensions.numberWidth, alignment: .topLeading)
                 Text(question)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
@@ -152,7 +162,7 @@ struct QuestionView: View {
             .fontWeight(.light)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-
+        .padding(Dimensions.outerSpacing)
     }
 }
 
@@ -184,10 +194,10 @@ struct QuestionAndAnswerView: View {
     }
     
     var body: some View {
-        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 20) {
+        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: Dimensions.gridSpacing) {
             GridRow {
                 Color.clear.frame(width: 0, height: 0)
-                HStack(spacing: 10) {
+                HStack(spacing: Dimensions.whatLinksSpacing) {
                     Image(systemName: "link")
                     Text("What links")
                         .textCase(.uppercase)
@@ -200,7 +210,7 @@ struct QuestionAndAnswerView: View {
 
             GridRow {
                 Text("\(number).")
-                    .frame(width: 150, alignment: .topLeading)
+                    .frame(width: Dimensions.numberWidth, alignment: .topLeading)
                 Text(question)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
@@ -227,7 +237,7 @@ struct QuestionAndAnswerView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-
+        .padding(Dimensions.outerSpacing)
     }
 }
 
@@ -239,22 +249,22 @@ struct ScoreIndicatorView: View {
             switch score {
             case .none:
                 Circle()
-                    .stroke(Color.gray, lineWidth: 3)
-                    .frame(width: 100, height: 100)
+                    .stroke(Color.gray, lineWidth: Dimensions.scoreCircleBorder)
+                    .frame(width: Dimensions.scoreCircle, height: Dimensions.scoreCircle)
             case .full:
                 Circle()
-                    .stroke(Color.yellow, lineWidth: 3)
+                    .stroke(Color.yellow, lineWidth: Dimensions.scoreCircleBorder)
                     .fill(Color.yellow)
-                    .frame(width: 100, height: 100)
+                    .frame(width: Dimensions.scoreCircle, height: Dimensions.scoreCircle)
                 Image(systemName: "checkmark")
-                    .font(.system(size: 50, weight: .bold))
+                    .font(.system(size: Dimensions.scoreTick, weight: .bold))
                     .foregroundColor(.black)
             case .half:
                 Circle()
-                    .stroke(Color.gray, lineWidth: 3)
-                    .frame(width: 100, height: 100)
+                    .stroke(Color.gray, lineWidth: Dimensions.scoreCircleBorder)
+                    .frame(width: Dimensions.scoreCircle, height: Dimensions.scoreCircle)
                 Image(systemName: "checkmark")
-                    .font(.system(size: 50, weight: .bold))
+                    .font(.system(size: Dimensions.scoreTick, weight: .bold))
                     .foregroundColor(.yellow)
             }
         }
@@ -279,12 +289,11 @@ struct ResultsView: View {
                 .fontWeight(.thin)
                 .foregroundColor(.white)
 
-            Text("Score: \(scoreString)")
-                .font(.custom("Open Sans", size: FontSize.date))
+            Text("Total score: \(scoreString)")
+                .font(.custom("Open Sans", size: FontSize.score))
                 .fontWeight(.thin)
                 .foregroundColor(.yellow)
-                .padding(.top, 250)
-                .textCase(.uppercase)
+                .padding(.top, 300)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }

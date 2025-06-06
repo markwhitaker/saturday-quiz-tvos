@@ -22,7 +22,7 @@ struct QuizView: View, QuizViewing {
     }
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
+        ZStack {
             Color.black.ignoresSafeArea()
             
             Group {
@@ -30,7 +30,7 @@ struct QuizView: View, QuizViewing {
                 case .loading:
                     Text("Loading...")
                 case .ready(let date):
-                    Text("Ready? \(dateFormatter.string(from: date))")
+                    ReadyView(date: date)
                 case .question(let number, let type, let question):
                     Text("\(number). \(question)")
                 case .answersTitle:
@@ -112,6 +112,34 @@ struct QuizView: View, QuizViewing {
     }
 }
 
+struct ReadyView: View {
+    let date: String
+    let dateFormatter: DateFormatter
+    
+    init(date: Date) {
+        dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d MMM yyyy"
+        self.date = dateFormatter.string(from: date)
+    }
+    
+    @FocusState private var isFocused: Bool
+    
+    var body: some View {
+        ZStack(alignment: .center) {
+            Text(date)
+                .font(.system(size: 48, weight: .thin))
+                .foregroundColor(.yellow)
+                .padding(.bottom, 400)
+                .textCase(.uppercase)
+            
+            Text("Ready?")
+                .font(.system(size: 100, weight: .thin))
+                .foregroundColor(.white)
+        }
+    }
+}
+
+
 #Preview {
-    QuizView()
+    ReadyView(date: Date())
 }

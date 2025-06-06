@@ -56,7 +56,6 @@ class QuizPresenter : ObservableObject {
                     
                     self.quiz = decodedQuiz
                     self.buildScenes()
-                    self.next()
                 } catch {
                     debugPrint("Failed to decode quiz: \(error.localizedDescription)")
                 }
@@ -79,6 +78,8 @@ class QuizPresenter : ObservableObject {
             self.scenes.append(.questionAnswer(question.number, question.type, question.question, question.answer))
         }
         self.scenes.append(.results)
+        
+        self.scenes.remove(at: 0)
     }
 
     func next() {

@@ -18,14 +18,14 @@ enum QuizScene {
 }
 
 enum ScoreState: Double {
-    case empty = 0.0
+    case none = 0.0
     case half = 0.5
     case full = 1.0
 }
 
 class QuizPresenter : ObservableObject {
     private var quiz: Quiz? = nil
-//    @Published var scores: [ScoreState] = []
+    @Published var scores: [ScoreState] = []
     @Published var scenes: [QuizScene] = [.loading]
     @Published var sceneIndex = 0
     
@@ -56,6 +56,7 @@ class QuizPresenter : ObservableObject {
                     
                     self.quiz = decodedQuiz
                     self.buildScenes()
+                    self.scores = Array(repeating: .none, count: self.quiz!.questions.count)
                 } catch {
                     debugPrint("Failed to decode quiz: \(error.localizedDescription)")
                 }

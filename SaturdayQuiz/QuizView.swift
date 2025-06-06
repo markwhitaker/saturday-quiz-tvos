@@ -50,7 +50,6 @@ struct QuizView: View {
 
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(.black)
         .focusable()
         .focused($isFocused)
         .padding(.zero)
@@ -134,7 +133,7 @@ struct QuestionView: View {
 
             GridRow {
                 Text("\(number).")
-                    .frame(width: 100, alignment: .topLeading)
+                    .frame(width: 120, alignment: .topLeading)
                 Text(question)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
@@ -188,7 +187,7 @@ struct QuestionAndAnswerView: View {
 
             GridRow {
                 Text("\(number).")
-                    .frame(width: 100, alignment: .topLeading)
+                    .frame(width: 120, alignment: .topLeading)
                 Text(question)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
@@ -203,24 +202,24 @@ struct QuestionAndAnswerView: View {
             .font(.custom("Open Sans", size: FontSize.body))
             .fontWeight(.light)
             .foregroundStyle(.yellow)
-//
-//            GridRow {
-//                VStack {
-//                    Spacer()
-//                }
-//            }
-//
-//            GridRow {
-//                ZStack {
-//                    Circle()
-//                        .stroke(Color.yellow, lineWidth: 5)
-//                        .frame(width: 100, height: 100)
-//
-//                    Image(systemName: "checkmark")
-//                        .font(.system(size: 48, weight: .bold))
-//                        .foregroundColor(.yellow)
-//                }
-//            }
+
+            GridRow {
+                VStack {
+                    Spacer()
+                }
+            }
+
+            GridRow {
+                ZStack {
+                    Circle()
+                        .stroke(Color.gray, lineWidth: 3)
+                        .frame(width: 80, height: 80)
+
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 40, weight: .bold))
+                        .foregroundColor(.yellow)
+                }
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
@@ -243,5 +242,4 @@ struct QuestionAndAnswerView: View {
         
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-
 }

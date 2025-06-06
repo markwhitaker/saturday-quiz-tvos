@@ -6,8 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4D8603102DF36D7E00BC0072 /* OpenSans-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D86030F2DF36D7E00BC0072 /* OpenSans-Variable.ttf */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		4D4923EC2DEAFD0400BFF49E /* SaturdayQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaturdayQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D86030D2DF36C2300BC0072 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D86030F2DF36D7E00BC0072 /* OpenSans-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Variable.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,8 +38,10 @@
 		4D4923E32DEAFD0400BFF49E = {
 			isa = PBXGroup;
 			children = (
+				4D86030D2DF36C2300BC0072 /* Info.plist */,
 				4D4923EE2DEAFD0400BFF49E /* SaturdayQuiz */,
 				4D4923ED2DEAFD0400BFF49E /* Products */,
+				4D86030F2DF36D7E00BC0072 /* OpenSans-Variable.ttf */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,6 +117,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D8603102DF36D7E00BC0072 /* OpenSans-Variable.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,7 +264,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 57862RQH85;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -280,7 +290,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 57862RQH85;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (

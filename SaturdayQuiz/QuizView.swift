@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+struct FontSize {
+    static let title: CGFloat = 100
+    static let body: CGFloat = 50
+    static let whatLinks: CGFloat = 30
+    static let date: CGFloat = 40
+}
+
 struct QuizView: View {
     @StateObject var presenter = QuizPresenter()
 
@@ -25,47 +32,177 @@ struct QuizView: View {
             Group {
                 switch presenter.currentScene {
                 case .loading:
-                    Text("Loading...")
+                    LoadingView()
                 case .ready(let date):
                     ReadyView(date: date)
                 case .question(let number, let type, let question):
-                    Text("\(number). \(question)")
+                    QuestionView(number: number, type: type, question: question)
                 case .answersTitle:
-                    Text("Answers...")
+                    AnswersTitleView()
                 case .questionAnswer(let number, let type, let question, let answer):
-                    Text("\(number). \(question) \(answer)")
+                    QuestionAndAnswerView(number: number, type: type, question: question, answer: answer)
                 case .results:
                     Text("Results...")
                 }
-            }.foregroundStyle(.white)
+            }
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-//        Grid(alignment: .topLeading, verticalSpacing: 20) {
-//            GridRow {
-//                Color.clear.frame(width: 0, height: 0)
-//                HStack(spacing: 10) {
-//                    Image(systemName: "link")
-//                    Text("What links")
-//                        .textCase(.uppercase)
-//                }
-//                .font(.system(size: 32, weight: .black))
-//                .foregroundStyle(.secondary)
-//            }
-//
-//            GridRow {
-//                Text("1.")
-//                Text("Question goes here even if it's a very very large question in which case the text will wrap...")
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//            }
-//            .font(.system(size: 64, weight: .light))
-//
-//            GridRow {
-//                Color.clear.frame(width: 0, height: 0)
-//                Text("Answer goes here...")
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//            }
-//            .font(.system(size: 64, weight: .light))
-//            .foregroundStyle(.yellow)
+        .background(.black)
+        .focusable()
+        .focused($isFocused)
+        .padding(.zero)
+        .onAppear {
+            presenter.onViewReady()
+            isFocused = true
+        }
+        .onMoveCommand { direction in
+            switch direction {
+            case .left:
+                presenter.previous()
+            case .right:
+                presenter.next()
+            default:
+                break
+            }
+        }
+    }
+}
+
+struct LoadingView: View {
+    var body: some View {
+        ProgressView()
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    }
+}
+
+struct ReadyView: View {
+    let date: String
+    let dateFormatter: DateFormatter
+    
+    init(date: Date) {
+        dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d MMM yyyy"
+        self.date = dateFormatter.string(from: date)
+    }
+    
+    var body: some View {
+        ZStack {
+            Text(date)
+                .font(.custom("Open Sans", size: FontSize.date))
+                .fontWeight(.thin)
+                .foregroundColor(.yellow)
+                .padding(.bottom, 400)
+                .textCase(.uppercase)
+            
+            Text("Ready?")
+                .font(.custom("Open Sans", size: FontSize.title))
+                .fontWeight(.thin)
+                .foregroundColor(.white)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    }
+}
+
+struct QuestionView: View {
+    let number: Int
+    let isWhatLinks: Bool
+    let question: String
+    
+    init(number: Int, type: QuestionType, question: String) {
+        self.number = number
+        self.question = question
+        self.isWhatLinks = type == .whatLinks
+    }
+    
+    var body: some View {
+        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 20) {
+            GridRow {
+                Color.clear.frame(width: 0, height: 0)
+                HStack(spacing: 10) {
+                    Image(systemName: "link")
+                    Text("What links")
+                        .textCase(.uppercase)
+                }
+                .font(.custom("Open Sans", size: FontSize.whatLinks))
+                .fontWeight(.black)
+                .foregroundStyle(.tertiary)
+                .opacity(isWhatLinks ? 1 : 0)
+            }
+
+            GridRow {
+                Text("\(number).")
+                    .frame(width: 100, alignment: .topLeading)
+                Text(question)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+            }
+            .font(.custom("Open Sans", size: FontSize.body))
+            .fontWeight(.light)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
+    }
+}
+
+struct AnswersTitleView: View {
+    var body: some View {
+        ZStack {
+            Text("Answers")
+                .font(.custom("Open Sans", size: FontSize.title))
+                .fontWeight(.thin)
+                .foregroundColor(.white)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    }
+}
+
+struct QuestionAndAnswerView: View {
+    let number: Int
+    let isWhatLinks: Bool
+    let question: String
+    let answer: String
+    
+    init(number: Int, type: QuestionType, question: String, answer: String) {
+        self.number = number
+        self.question = question
+        self.answer = answer
+        self.isWhatLinks = type == .whatLinks
+    }
+    
+    var body: some View {
+        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 20) {
+            GridRow {
+                Color.clear.frame(width: 0, height: 0)
+                HStack(spacing: 10) {
+                    Image(systemName: "link")
+                    Text("What links")
+                        .textCase(.uppercase)
+                }
+                .font(.custom("Open Sans", size: FontSize.whatLinks))
+                .fontWeight(.black)
+                .foregroundStyle(.tertiary)
+                .opacity(isWhatLinks ? 1 : 0)
+            }
+
+            GridRow {
+                Text("\(number).")
+                    .frame(width: 100, alignment: .topLeading)
+                Text(question)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+            }
+            .font(.custom("Open Sans", size: FontSize.body))
+            .fontWeight(.light)
+
+            GridRow {
+                Color.clear.frame(width: 0, height: 0)
+                Text(answer)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+            }
+            .font(.custom("Open Sans", size: FontSize.body))
+            .fontWeight(.light)
+            .foregroundStyle(.yellow)
 //
 //            GridRow {
 //                VStack {
@@ -84,59 +221,27 @@ struct QuizView: View {
 //                        .foregroundColor(.yellow)
 //                }
 //            }
-//        }
-        .background(.black)
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .focusable()
-        .focused($isFocused)
-        .padding(.zero)
-        .onAppear {
-            presenter.onViewReady()
-            isFocused = true
-        }
-        .onMoveCommand { direction in
-            switch direction {
-            case .left:
-                presenter.previous()
-                debugPrint("Left pressed")
-            case .right:
-                presenter.next()
-                debugPrint("Right pressed")
-            default:
-                break
-            }
-        }
+
     }
 }
-
-struct ReadyView: View {
-    let date: String
-    let dateFormatter: DateFormatter
-    
-    init(date: Date) {
-        dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d MMM yyyy"
-        self.date = dateFormatter.string(from: date)
-    }
-    
-    @FocusState private var isFocused: Bool
-    
-    var body: some View {
-        ZStack(alignment: .center) {
-            Text(date)
-                .font(.system(size: 48, weight: .thin))
-                .foregroundColor(.yellow)
-                .padding(.bottom, 400)
-                .textCase(.uppercase)
-            
-            Text("Ready?")
-                .font(.system(size: 100, weight: .thin))
-                .foregroundColor(.white)
-        }
-    }
-}
-
 
 #Preview {
-    ReadyView(date: Date())
+    ZStack {
+//        LoadingView()
+
+//        ReadyView(date: Date())
+    
+//        QuestionView(number: 4, type: .normal, question: "Which sci-fi writer was the first person in Europe to buy a Mac computer?")
+    
+//        QuestionView(number: 10, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin’s pubs; Wardle and Makin’s shops?")
+        
+//        AnswersTitleView()
+
+        QuestionAndAnswerView(number: 10, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin’s pubs; Wardle and Makin’s shops?", answer: "JD: JD Vance; JD Salinger; JD Wetherspoon; JD Sports")
+        
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
 }

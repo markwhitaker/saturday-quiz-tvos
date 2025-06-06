@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct FontSize {
-    static let title: CGFloat = 100
-    static let body: CGFloat = 50
-    static let whatLinks: CGFloat = 30
-    static let date: CGFloat = 40
+    static let title: CGFloat = 120
+    static let body: CGFloat = 75
+    static let whatLinks: CGFloat = 35
+    static let date: CGFloat = 50
 }
 
 struct QuizView: View {
@@ -144,7 +144,7 @@ struct QuestionView: View {
 
             GridRow {
                 Text("\(number).")
-                    .frame(width: 120, alignment: .topLeading)
+                    .frame(width: 150, alignment: .topLeading)
                 Text(question)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
@@ -200,7 +200,7 @@ struct QuestionAndAnswerView: View {
 
             GridRow {
                 Text("\(number).")
-                    .frame(width: 120, alignment: .topLeading)
+                    .frame(width: 150, alignment: .topLeading)
                 Text(question)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
@@ -240,21 +240,21 @@ struct ScoreIndicatorView: View {
             case .none:
                 Circle()
                     .stroke(Color.gray, lineWidth: 3)
-                    .frame(width: 80, height: 80)
+                    .frame(width: 100, height: 100)
             case .full:
                 Circle()
                     .stroke(Color.yellow, lineWidth: 3)
                     .fill(Color.yellow)
-                    .frame(width: 80, height: 80)
+                    .frame(width: 100, height: 100)
                 Image(systemName: "checkmark")
-                    .font(.system(size: 40, weight: .bold))
+                    .font(.system(size: 50, weight: .bold))
                     .foregroundColor(.black)
             case .half:
                 Circle()
                     .stroke(Color.gray, lineWidth: 3)
-                    .frame(width: 80, height: 80)
+                    .frame(width: 100, height: 100)
                 Image(systemName: "checkmark")
-                    .font(.system(size: 40, weight: .bold))
+                    .font(.system(size: 50, weight: .bold))
                     .foregroundColor(.yellow)
             }
         }
@@ -315,7 +315,7 @@ struct ResultsView: View {
 
 #Preview("Question view: what links") {
     ZStack {
-        QuestionView(number: 4, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin's pubs; Wardle and Makin's shops?")
+        QuestionView(number: 10, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin's pubs; Wardle and Makin's shops?")
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 }
@@ -336,7 +336,7 @@ struct ResultsView: View {
 
 #Preview("Question/answer view: what links") {
     ZStack {
-        QuestionAndAnswerView(number: 4, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin's pubs; Wardle and Makin's shops?", answer: "JD: JD Vance; JD Salinger; JD Wetherspoon; JD Sports", score: .half)
+        QuestionAndAnswerView(number: 10, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin's pubs; Wardle and Makin's shops?", answer: "JD: JD Vance; JD Salinger; JD Wetherspoon; JD Sports", score: .half)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 }

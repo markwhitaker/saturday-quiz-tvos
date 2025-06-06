@@ -73,7 +73,7 @@ struct QuizView: View {
                 break
             }
         }
-        .onPlayPauseCommand {
+        .onTapGesture {
             if case .questionAnswer(let number, _, _, _) = presenter.currentScene {
                 presenter.cycleScore(for: number)
             }

@@ -7,10 +7,7 @@
 
 import SwiftUI
 
-protocol QuizViewing {
-}
-
-struct QuizView: View, QuizViewing {
+struct QuizView: View {
     @StateObject var presenter = QuizPresenter()
 
     @FocusState private var isFocused: Bool

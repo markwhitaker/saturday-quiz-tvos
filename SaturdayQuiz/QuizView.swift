@@ -99,9 +99,25 @@ struct QuizView: View {
 }
 
 struct LoadingView: View {
+    @State private var rotation: Double = 0
+
     var body: some View {
-        ProgressView()
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        ZStack {
+            RoundedRectangle(cornerRadius: 40) // 100% rounded corners (half of height)
+                .frame(width: 80, height: 40)
+                .foregroundColor(Colors.highlight)
+                .rotationEffect(.degrees(rotation))
+                .onAppear {
+                    withAnimation(
+                        Animation
+                            .easeInOut(duration: 1.0)
+                            .repeatForever(autoreverses: false)
+                    ) {
+                        rotation = 360
+                    }
+                }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }
 

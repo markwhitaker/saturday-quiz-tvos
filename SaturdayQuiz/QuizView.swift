@@ -282,14 +282,14 @@ struct ScoreIndicatorView: View {
                     .fill(Colors.highlight)
                     .frame(width: Dimensions.scoreCircle, height: Dimensions.scoreCircle)
                 Image(systemName: "checkmark")
-                    .font(.system(size: Dimensions.scoreTick, weight: .bold))
+                    .font(.system(size: Dimensions.scoreTick, weight: .heavy))
                     .foregroundColor(.black)
             case .half:
                 Circle()
                     .stroke(Colors.darkGray, lineWidth: Dimensions.scoreCircleBorder)
                     .frame(width: Dimensions.scoreCircle, height: Dimensions.scoreCircle)
                 Image(systemName: "checkmark")
-                    .font(.system(size: Dimensions.scoreTick, weight: .bold))
+                    .font(.system(size: Dimensions.scoreTick, weight: .heavy))
                     .foregroundColor(Colors.highlight)
             }
         }

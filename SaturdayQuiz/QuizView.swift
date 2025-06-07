@@ -248,7 +248,7 @@ struct QuestionAndAnswerView: View {
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .font(.custom("Open Sans", size: FontSize.body))
-            .fontWeight(.regular)
+            .fontWeight(.light)
             .foregroundStyle(Colors.highlight)
 
             GridRow {

@@ -54,7 +54,10 @@ struct QuizView: View {
                 case .ready(let date):
                     ReadyView(date: date)
                 case .question(let number, let type, let question):
-                    QuestionView(number: number, type: type, question: question)
+                    QuestionView(
+                        number: number,
+                        type: type,
+                        question: question)
                 case .answersTitle:
                     AnswersTitleView()
                 case .questionAnswer(let number, let type, let question, let answer):
@@ -63,8 +66,7 @@ struct QuizView: View {
                         type: type,
                         question: question,
                         answer: answer,
-                        score: presenter.scores[number - 1]
-                    )
+                        score: presenter.scores[number - 1])
                 case .results:
                     ResultsView(score: presenter.totalScore)
                 }
@@ -123,10 +125,9 @@ struct LoadingView: View {
 
 struct ReadyView: View {
     let date: String
-    let dateFormatter: DateFormatter
     
     init(date: Date) {
-        dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMM yyyy"
         self.date = dateFormatter.string(from: date)
     }
@@ -323,8 +324,6 @@ struct ResultsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }
-
-
 
 #Preview("Loading view") {
     ZStack {

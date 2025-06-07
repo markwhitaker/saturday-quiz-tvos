@@ -135,14 +135,14 @@ struct ReadyView: View {
         ZStack {
             Text(date)
                 .font(.custom("Open Sans", size: FontSize.date))
-                .fontWeight(.thin)
+                .fontWeight(.regular)
                 .foregroundColor(Colors.highlight)
                 .padding(.bottom, 400)
                 .textCase(.uppercase)
             
             Text("Ready?")
                 .font(.custom("Open Sans", size: FontSize.title))
-                .fontWeight(.thin)
+                .fontWeight(.light)
                 .foregroundColor(Colors.text)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
@@ -195,7 +195,7 @@ struct AnswersTitleView: View {
         ZStack {
             Text("Answers")
                 .font(.custom("Open Sans", size: FontSize.title))
-                .fontWeight(.thin)
+                .fontWeight(.light)
                 .foregroundColor(Colors.text)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
@@ -248,7 +248,7 @@ struct QuestionAndAnswerView: View {
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .font(.custom("Open Sans", size: FontSize.body))
-            .fontWeight(.light)
+            .fontWeight(.regular)
             .foregroundStyle(Colors.highlight)
 
             GridRow {
@@ -311,12 +311,12 @@ struct ResultsView: View {
         ZStack {
             Text("End")
                 .font(.custom("Open Sans", size: FontSize.title))
-                .fontWeight(.thin)
+                .fontWeight(.light)
                 .foregroundColor(Colors.text)
 
             Text("Total score: \(scoreString)")
                 .font(.custom("Open Sans", size: FontSize.score))
-                .fontWeight(.thin)
+                .fontWeight(.regular)
                 .foregroundColor(Colors.highlight)
                 .padding(.top, 300)
         }

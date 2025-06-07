@@ -97,9 +97,8 @@ class QuizPresenter : ObservableObject {
             for question in quiz!.questions {
                 self.scenes.append(.question(question.number, question.type, question.question))
             }
+            self.scenes.append(.answersTitle)
         }
-
-        self.scenes.append(.answersTitle)
 
         for question in quiz!.questions {
             self.scenes.append(.question(question.number, question.type, question.question))
@@ -114,18 +113,13 @@ class QuizPresenter : ObservableObject {
     private func initializeScores() -> Bool {
         guard let quiz = self.quiz else { return false }
         
-        // Create a key based on the quiz date
         let scoresKey = getScoreStorageKey(date: quiz.date)
 
-        // Try to load existing scores for this quiz date
         if let savedScoresData = userDefaults.data(forKey: scoresKey),
-           let savedScores = try? JSONDecoder().decode([ScoreState].self, from: savedScoresData),
-           savedScores.count == quiz.questions.count {
-            // Use saved scores if they exist and match the question count
+           let savedScores = try? JSONDecoder().decode([ScoreState].self, from: savedScoresData) {
             self.scores = savedScores
             return true
         } else {
-            // Initialize with default scores if no saved scores or count mismatch
             clearStoredScores()
             self.scores = Array(repeating: .none, count: quiz.questions.count)
             return false
@@ -135,10 +129,8 @@ class QuizPresenter : ObservableObject {
     private func saveScores() {
         guard let quiz = self.quiz else { return }
         
-        // Create the same key used for loading
         let scoresKey = getScoreStorageKey(date: quiz.date)
-        
-        // Save scores to UserDefaults
+
         if let encodedScores = try? JSONEncoder().encode(scores) {
             userDefaults.set(encodedScores, forKey: scoresKey)
         }
@@ -156,11 +148,13 @@ class QuizPresenter : ObservableObject {
         }
     }
     
-    func cycleScore(for questionNumber: Int) {
-        let index = questionNumber - 1
-        if index >= 0 && index < scores.count {
-            scores[index] = scores[index].next()
-            saveScores() // Save immediately when score changes
+    func cycleScore() {
+        if case .questionAnswer(let questionNumber, _, _, _) = currentScene {
+            let index = questionNumber - 1
+            if index >= 0 && index < scores.count {
+                scores[index] = scores[index].next()
+                saveScores()
+            }
         }
     }
     

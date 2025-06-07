@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FontSize {
+struct FontSizes {
     static let title: CGFloat = 120
     static let body: CGFloat = 70
     static let whatLinks: CGFloat = 35
@@ -32,15 +32,29 @@ struct Colors {
     static let darkGray = Color(red: 68/255, green: 68/255, blue: 68/255)
 }
 
+struct Constants {
+    static let fontFace = "Open Sans"
+}
+
+extension View {
+    func fillParentCentered() -> some View {
+        return self.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    }
+    
+    func fillParentTopLeft() -> some View {
+        return self.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+}
+
 struct QuizView: View {
     @StateObject var presenter = QuizPresenter()
 
     @FocusState private var isFocused: Bool
     
-    private var dateFormatter = DateFormatter()
-    
-    init() {
+    private let dateFormatter = {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMM yyyy"
+        return dateFormatter
     }
 
     var body: some View {
@@ -72,10 +86,9 @@ struct QuizView: View {
                 }
             }
             .foregroundStyle(Colors.text)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-
+            .fillParentTopLeft()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .fillParentTopLeft()
         .focusable()
         .focused($isFocused)
         .onAppear {
@@ -93,9 +106,10 @@ struct QuizView: View {
             }
         }
         .onTapGesture {
-            if case .questionAnswer(let number, _, _, _) = presenter.currentScene {
-                presenter.cycleScore(for: number)
-            }
+            presenter.cycleScore()
+        }
+        .onPlayPauseCommand {
+            presenter.cycleScore()
         }
     }
 }
@@ -105,7 +119,7 @@ struct LoadingView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 40) // 100% rounded corners (half of height)
+            RoundedRectangle(cornerRadius: 40)
                 .frame(width: 80, height: 40)
                 .foregroundColor(Colors.highlight)
                 .rotationEffect(.degrees(rotation))
@@ -119,7 +133,7 @@ struct LoadingView: View {
                     }
                 }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .fillParentCentered()
     }
 }
 
@@ -135,18 +149,18 @@ struct ReadyView: View {
     var body: some View {
         ZStack {
             Text(date)
-                .font(.custom("Open Sans", size: FontSize.date))
+                .font(.custom(Constants.fontFace, size: FontSizes.date))
                 .fontWeight(.regular)
                 .foregroundColor(Colors.highlight)
                 .padding(.bottom, 400)
                 .textCase(.uppercase)
             
             Text("Ready?")
-                .font(.custom("Open Sans", size: FontSize.title))
+                .font(.custom(Constants.fontFace, size: FontSizes.title))
                 .fontWeight(.light)
                 .foregroundColor(Colors.text)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .fillParentCentered()
     }
 }
 
@@ -170,7 +184,7 @@ struct QuestionView: View {
                     Text("What links")
                         .textCase(.uppercase)
                 }
-                .font(.custom("Open Sans", size: FontSize.whatLinks))
+                .font(.custom(Constants.fontFace, size: FontSizes.whatLinks))
                 .fontWeight(.black)
                 .foregroundStyle(Colors.midGray)
                 .opacity(isWhatLinks ? 1 : 0)
@@ -182,11 +196,11 @@ struct QuestionView: View {
                 Text(question)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
-            .font(.custom("Open Sans", size: FontSize.body))
+            .font(.custom(Constants.fontFace, size: FontSizes.body))
             .fontWeight(.light)
             .foregroundStyle(Colors.text)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .fillParentTopLeft()
         .padding(Dimensions.outerSpacing)
     }
 }
@@ -195,11 +209,11 @@ struct AnswersTitleView: View {
     var body: some View {
         ZStack {
             Text("Answers")
-                .font(.custom("Open Sans", size: FontSize.title))
+                .font(.custom(Constants.fontFace, size: FontSizes.title))
                 .fontWeight(.light)
                 .foregroundColor(Colors.text)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .fillParentCentered()
     }
 }
 
@@ -227,7 +241,7 @@ struct QuestionAndAnswerView: View {
                     Text("What links")
                         .textCase(.uppercase)
                 }
-                .font(.custom("Open Sans", size: FontSize.whatLinks))
+                .font(.custom(Constants.fontFace, size: FontSizes.whatLinks))
                 .fontWeight(.black)
                 .foregroundStyle(Colors.midGray)
                 .opacity(isWhatLinks ? 1 : 0)
@@ -239,7 +253,7 @@ struct QuestionAndAnswerView: View {
                 Text(question)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
-            .font(.custom("Open Sans", size: FontSize.body))
+            .font(.custom(Constants.fontFace, size: FontSizes.body))
             .fontWeight(.light)
             .foregroundStyle(Colors.text)
 
@@ -248,7 +262,7 @@ struct QuestionAndAnswerView: View {
                 Text(answer)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
-            .font(.custom("Open Sans", size: FontSize.body))
+            .font(.custom(Constants.fontFace, size: FontSizes.body))
             .fontWeight(.light)
             .foregroundStyle(Colors.highlight)
 
@@ -262,7 +276,7 @@ struct QuestionAndAnswerView: View {
                 ScoreIndicatorView(score: score)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .fillParentTopLeft()
         .padding(Dimensions.outerSpacing)
     }
 }
@@ -311,17 +325,17 @@ struct ResultsView: View {
     var body: some View {
         ZStack {
             Text("End")
-                .font(.custom("Open Sans", size: FontSize.title))
+                .font(.custom(Constants.fontFace, size: FontSizes.title))
                 .fontWeight(.light)
                 .foregroundColor(Colors.text)
 
             Text("Total score: \(scoreString)")
-                .font(.custom("Open Sans", size: FontSize.score))
+                .font(.custom(Constants.fontFace, size: FontSizes.score))
                 .fontWeight(.regular)
                 .foregroundColor(Colors.highlight)
                 .padding(.top, 300)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .fillParentCentered()
     }
 }
 
@@ -329,54 +343,54 @@ struct ResultsView: View {
     ZStack {
         LoadingView()
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .fillParentTopLeft()
 }
 
 #Preview("Ready view") {
     ZStack {
         ReadyView(date: Date())
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .fillParentTopLeft()
 }
 
 #Preview("Question view: normal") {
     ZStack {
         QuestionView(number: 4, type: .normal, question: "Which sci-fi writer was the first person in Europe to buy a Mac computer?")
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .fillParentTopLeft()
 }
 
 #Preview("Question view: what links") {
     ZStack {
         QuestionView(number: 10, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin's pubs; Wardle and Makin's shops?")
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .fillParentTopLeft()
 }
 
 #Preview("Answers title view") {
     ZStack {
         AnswersTitleView()
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .fillParentTopLeft()
 }
 
 #Preview("Question/answer view: normal") {
     ZStack {
         QuestionAndAnswerView(number: 4, type: .normal, question: "Which sci-fi writer was the first person in Europe to buy a Mac computer?", answer: "Douglas Adams (Stephen Fry was the second)", score: .full)
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .fillParentTopLeft()
 }
 
 #Preview("Question/answer view: what links") {
     ZStack {
         QuestionAndAnswerView(number: 10, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin's pubs; Wardle and Makin's shops?", answer: "JD: JD Vance; JD Salinger; JD Wetherspoon; JD Sports", score: .half)
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .fillParentTopLeft()
 }
 
 #Preview("Results view") {
     ZStack {
         ResultsView(score: 10.5)
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .fillParentTopLeft()
 }

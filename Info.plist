@@ -10,10 +10,10 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-    <key>CFBundleName</key>
-    <string>$(PRODUCT_NAME)</string>
-    <key>CFBundleDisplayName</key>
-    <string>The Quiz</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundleDisplayName</key>
+	<string>The Quiz</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
@@ -29,10 +29,11 @@
 	</dict>
 	<key>UILaunchScreen</key>
 	<dict/>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
+	<key>TVTopShelfImage</key>
+	<dict>
+		 <key>TVTopShelfPrimaryImageWide</key>
+		 <string>Top Shelf Image Wide</string>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>OpenSans-Variable.ttf</string>

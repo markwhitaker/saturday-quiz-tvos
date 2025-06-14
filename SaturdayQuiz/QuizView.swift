@@ -36,16 +36,6 @@ struct Constants {
     static let fontFace = "Open Sans"
 }
 
-extension View {
-    func fillParentCentered() -> some View {
-        return self.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-    }
-    
-    func fillParentTopLeft() -> some View {
-        return self.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-    }
-}
-
 struct QuizView: View {
     @StateObject var presenter = QuizPresenter()
 

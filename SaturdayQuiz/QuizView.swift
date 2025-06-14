@@ -26,10 +26,10 @@ struct Dimensions {
 }
 
 struct Colors {
-    static let text = Color(red: 221/255, green: 221/255, blue: 221/255)
-    static let highlight = Color(red: 255/255, green: 221/255, blue: 0/255)
-    static let midGray = Color(red: 102/255, green: 102/255, blue: 102/255)
-    static let darkGray = Color(red: 68/255, green: 68/255, blue: 68/255)
+    static let text = try! Color.fromHex("dddddd")
+    static let highlight = try! Color.fromHex("ffdd00")
+    static let midGray = try! Color.fromHex("666666")
+    static let darkGray = try! Color.fromHex("444444")
 }
 
 struct Constants {

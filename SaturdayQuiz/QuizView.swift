@@ -185,7 +185,7 @@ struct QuestionView: View {
                         .textCase(.uppercase)
                 }
                 .font(.custom(Constants.fontFace, size: FontSizes.whatLinks))
-                .fontWeight(.black)
+                .fontWeight(.bold)
                 .foregroundStyle(Colors.midGray)
                 .opacity(isWhatLinks ? 1 : 0)
             }

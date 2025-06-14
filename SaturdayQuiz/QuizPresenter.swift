@@ -9,11 +9,11 @@ import SwiftUI
 
 enum QuizScene {
     case loading
-    case ready(Date)
-    case question(Int, QuestionType, String)
+    case ready(date: Date)
+    case question(number: Int, type: QuestionType, question: String)
     case answersTitle
-    case questionAnswer(Int, QuestionType, String, String)
-    case results(Double)
+    case questionAnswer(number: Int, type: QuestionType, question: String, answer: String)
+    case results(score: Double)
 }
 
 enum ScoreState: Double, CaseIterable, Codable {
@@ -38,7 +38,7 @@ class QuizPresenter : ObservableObject {
     @Published var scores: [ScoreState] = []
     @Published var scenes: [QuizScene] = [.loading]
     @Published var sceneIndex = 0
-    
+
     private let userDefaults = UserDefaults.standard
     private let scoresKeyPrefix = "quiz_scores_"
     private let scoresKeyDateFormatter = {
@@ -46,17 +46,18 @@ class QuizPresenter : ObservableObject {
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
-    
+
     var currentScene: QuizScene {
         return scenes[sceneIndex]
     }
-    
+
     var totalScore: Double {
         return scores.map(\.rawValue).reduce(0, +)
     }
-    
+
     func onViewReady() {
         guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz") else { return }
+
         debugPrint("Requesting quiz data from \(url)")
         URLSession.shared.dataTask(with: url) { data, response, error in
             DispatchQueue.main.async {
@@ -85,34 +86,42 @@ class QuizPresenter : ObservableObject {
             }
         }.resume()
     }
-    
+
     private func buildScenes(skipToAnswers: Bool) {
-        if (self.quiz == nil) {
-            return
-        }
-        
-        self.scenes.append(.ready(self.quiz!.date))
-        
+        guard let quiz = self.quiz else { return }
+
+        self.scenes.append(.ready(date: quiz.date))
+
         if (!skipToAnswers) {
-            for question in quiz!.questions {
-                self.scenes.append(.question(question.number, question.type, question.question))
+            for question in quiz.questions {
+                self.scenes.append(.question(
+                    number: question.number,
+                    type: question.type,
+                    question: question.question))
             }
             self.scenes.append(.answersTitle)
         }
 
-        for question in quiz!.questions {
-            self.scenes.append(.question(question.number, question.type, question.question))
-            self.scenes.append(.questionAnswer(question.number, question.type, question.question, question.answer))
+        for question in quiz.questions {
+            self.scenes.append(.question(
+                number: question.number,
+                type: question.type,
+                question: question.question))
+            self.scenes.append(.questionAnswer(
+                number: question.number,
+                type: question.type,
+                question: question.question,
+                answer: question.answer))
         }
 
-        self.scenes.append(.results(totalScore))
-        
+        self.scenes.append(.results(score: totalScore))
+
         self.scenes.remove(at: 0)
     }
-    
+
     private func initializeScores() -> Bool {
         guard let quiz = self.quiz else { return false }
-        
+
         let scoresKey = getScoreStorageKey(date: quiz.date)
 
         if let savedScoresData = userDefaults.data(forKey: scoresKey),
@@ -125,29 +134,29 @@ class QuizPresenter : ObservableObject {
             return false
         }
     }
-    
+
     private func saveScores() {
         guard let quiz = self.quiz else { return }
-        
+
         let scoresKey = getScoreStorageKey(date: quiz.date)
 
         if let encodedScores = try? JSONEncoder().encode(scores) {
             userDefaults.set(encodedScores, forKey: scoresKey)
         }
     }
-    
+
     func next() {
         if (self.sceneIndex < self.scenes.count - 1) {
             sceneIndex += 1
         }
     }
-    
+
     func previous() {
         if (self.sceneIndex > 0) {
             sceneIndex -= 1
         }
     }
-    
+
     func cycleScore() {
         if case .questionAnswer(let questionNumber, _, _, _) = currentScene {
             let index = questionNumber - 1
@@ -157,11 +166,11 @@ class QuizPresenter : ObservableObject {
             }
         }
     }
-    
+
     private func getScoreStorageKey(date: Date) -> String {
         return scoresKeyPrefix + scoresKeyDateFormatter.string(from: date)
     }
-    
+
     private func clearStoredScores() {
         let quizScoreKeys = userDefaults.dictionaryRepresentation().keys.filter { $0.hasPrefix(scoresKeyPrefix) }
         for key in quizScoreKeys {

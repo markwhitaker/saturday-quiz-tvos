@@ -14,12 +14,17 @@ enum HexColorError: Error {
 
 extension Color {
     static func fromHex(_ hex: String) throws -> Color {
-        var rgb: UInt64 = 0
+        var hex = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if (hex.count == 3) {
+            hex = hex.map { String($0) + String($0) }.joined()
+        }
 
         guard hex.count == 6 else {
             throw HexColorError.invalidFormat
         }
 
+        var rgb: UInt64 = 0
         guard Scanner(string: hex).scanHexInt64(&rgb) else {
             throw HexColorError.invalidFormat
         }

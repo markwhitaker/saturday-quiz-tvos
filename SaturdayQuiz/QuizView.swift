@@ -26,10 +26,10 @@ struct Dimensions {
 }
 
 struct Colors {
-    static let text = try! Color.fromHex("dddddd")
-    static let highlight = try! Color.fromHex("ffdd00")
-    static let midGray = try! Color.fromHex("666666")
-    static let darkGray = try! Color.fromHex("444444")
+    static let text = try! Color.fromHex("ddd")
+    static let highlight = try! Color.fromHex("fd0")
+    static let midGray = try! Color.fromHex("666")
+    static let darkGray = try! Color.fromHex("444")
 }
 
 struct Constants {

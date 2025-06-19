@@ -90,33 +90,33 @@ class QuizPresenter : ObservableObject {
     private func buildScenes(skipToAnswers: Bool) {
         guard let quiz = self.quiz else { return }
 
-        self.scenes.append(.ready(date: quiz.date))
+        scenes.append(.ready(date: quiz.date))
 
         if (!skipToAnswers) {
             for question in quiz.questions {
-                self.scenes.append(.question(
+                scenes.append(.question(
                     number: question.number,
                     type: question.type,
                     question: question.question))
             }
-            self.scenes.append(.answersTitle)
+            scenes.append(.answersTitle)
         }
 
         for question in quiz.questions {
-            self.scenes.append(.question(
+            scenes.append(.question(
                 number: question.number,
                 type: question.type,
                 question: question.question))
-            self.scenes.append(.questionAnswer(
+            scenes.append(.questionAnswer(
                 number: question.number,
                 type: question.type,
                 question: question.question,
                 answer: question.answer))
         }
 
-        self.scenes.append(.results(score: totalScore))
+        scenes.append(.results(score: totalScore))
 
-        self.scenes.remove(at: 0)
+        scenes.remove(at: 0)
     }
 
     private func initializeScores() -> Bool {
@@ -126,11 +126,11 @@ class QuizPresenter : ObservableObject {
 
         if let savedScoresData = userDefaults.data(forKey: scoresKey),
            let savedScores = try? JSONDecoder().decode([ScoreState].self, from: savedScoresData) {
-            self.scores = savedScores
+            scores = savedScores
             return true
         } else {
             clearStoredScores()
-            self.scores = Array(repeating: .none, count: quiz.questions.count)
+            scores = Array(repeating: .none, count: quiz.questions.count)
             return false
         }
     }
@@ -146,13 +146,15 @@ class QuizPresenter : ObservableObject {
     }
 
     func next() {
-        if (self.sceneIndex < self.scenes.count - 1) {
+        if (sceneIndex < scenes.count - 1) {
             sceneIndex += 1
+        } else {
+            exit(0)
         }
     }
 
     func previous() {
-        if (self.sceneIndex > 0) {
+        if (sceneIndex > 0) {
             sceneIndex -= 1
         }
     }

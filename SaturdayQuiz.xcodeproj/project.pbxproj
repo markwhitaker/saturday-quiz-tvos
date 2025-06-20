@@ -12,13 +12,25 @@
 
 /* Begin PBXFileReference section */
 		4D4923EC2DEAFD0400BFF49E /* SaturdayQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaturdayQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D86030D2DF36C2300BC0072 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D9305732E052FF600E80B54 /* OpenSans-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Variable.ttf"; path = "assets/OpenSans-Variable.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4D93059E2E0531E900E80B54 /* Exceptions for "SaturdayQuiz" folder in "SaturdayQuiz" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4D4923EB2DEAFD0400BFF49E /* SaturdayQuiz */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4D4923EE2DEAFD0400BFF49E /* SaturdayQuiz */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4D93059E2E0531E900E80B54 /* Exceptions for "SaturdayQuiz" folder in "SaturdayQuiz" target */,
+			);
 			path = SaturdayQuiz;
 			sourceTree = "<group>";
 		};
@@ -38,7 +50,6 @@
 		4D4923E32DEAFD0400BFF49E = {
 			isa = PBXGroup;
 			children = (
-				4D86030D2DF36C2300BC0072 /* Info.plist */,
 				4D4923EE2DEAFD0400BFF49E /* SaturdayQuiz */,
 				4D4923ED2DEAFD0400BFF49E /* Products */,
 				4D9305732E052FF600E80B54 /* OpenSans-Variable.ttf */,
@@ -265,7 +276,7 @@
 				DEVELOPMENT_TEAM = 57862RQH85;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = SaturdayQuiz/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
@@ -292,7 +303,7 @@
 				DEVELOPMENT_TEAM = 57862RQH85;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = SaturdayQuiz/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;

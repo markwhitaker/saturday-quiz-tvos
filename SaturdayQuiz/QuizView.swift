@@ -305,11 +305,7 @@ struct ResultsView: View {
     let scoreString: String
     
     init(score: Double) {
-        var s = "\(Int(score))"
-        if (score.rounded(.down) < score) {
-            s.append("½")
-        }
-        scoreString = s
+        scoreString = ScoreFormatter.formatScore(score)
     }
     
     var body: some View {

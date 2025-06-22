@@ -11,8 +11,15 @@ struct FontSizes {
     static let title: CGFloat = 120
     static let body: CGFloat = 70
     static let whatLinks: CGFloat = 35
-    static let date: CGFloat = 50
-    static let score: CGFloat = 60
+    static let subTitle: CGFloat = 50
+}
+
+struct FontWeights {
+    static let title: Font.Weight = .light
+    static let subTitle: Font.Weight = .regular
+    static let body: Font.Weight = .light
+    static let whatLinks: Font.Weight = .light
+    static let scoreTick: Font.Weight = .heavy
 }
 
 struct Dimensions {
@@ -139,15 +146,15 @@ struct ReadyView: View {
     var body: some View {
         ZStack {
             Text(date)
-                .font(.custom(Constants.fontFace, size: FontSizes.date))
-                .fontWeight(.regular)
+                .font(.custom(Constants.fontFace, size: FontSizes.subTitle))
+                .fontWeight(FontWeights.subTitle)
                 .foregroundColor(Colors.highlight)
                 .padding(.bottom, 400)
                 .textCase(.uppercase)
             
             Text("Ready?")
                 .font(.custom(Constants.fontFace, size: FontSizes.title))
-                .fontWeight(.light)
+                .fontWeight(FontWeights.title)
                 .foregroundColor(Colors.text)
         }
         .fillParentCentered()
@@ -175,7 +182,7 @@ struct QuestionView: View {
                         .textCase(.uppercase)
                 }
                 .font(.custom(Constants.fontFace, size: FontSizes.whatLinks))
-                .fontWeight(.bold)
+                .fontWeight(FontWeights.whatLinks)
                 .foregroundStyle(Colors.midGray)
                 .opacity(isWhatLinks ? 1 : 0)
             }
@@ -187,7 +194,7 @@ struct QuestionView: View {
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .font(.custom(Constants.fontFace, size: FontSizes.body))
-            .fontWeight(.light)
+            .fontWeight(FontWeights.body)
             .foregroundStyle(Colors.text)
         }
         .fillParentTopLeft()
@@ -200,7 +207,7 @@ struct AnswersTitleView: View {
         ZStack {
             Text("Answers")
                 .font(.custom(Constants.fontFace, size: FontSizes.title))
-                .fontWeight(.light)
+                .fontWeight(FontWeights.title)
                 .foregroundColor(Colors.text)
         }
         .fillParentCentered()
@@ -232,7 +239,7 @@ struct QuestionAndAnswerView: View {
                         .textCase(.uppercase)
                 }
                 .font(.custom(Constants.fontFace, size: FontSizes.whatLinks))
-                .fontWeight(.bold)
+                .fontWeight(FontWeights.whatLinks)
                 .foregroundStyle(Colors.midGray)
                 .opacity(isWhatLinks ? 1 : 0)
             }
@@ -244,7 +251,7 @@ struct QuestionAndAnswerView: View {
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .font(.custom(Constants.fontFace, size: FontSizes.body))
-            .fontWeight(.light)
+            .fontWeight(FontWeights.body)
             .foregroundStyle(Colors.text)
 
             GridRow {
@@ -253,7 +260,7 @@ struct QuestionAndAnswerView: View {
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .font(.custom(Constants.fontFace, size: FontSizes.body))
-            .fontWeight(.light)
+            .fontWeight(FontWeights.body)
             .foregroundStyle(Colors.highlight)
 
             GridRow {
@@ -287,14 +294,14 @@ struct ScoreIndicatorView: View {
                     .fill(Colors.highlight)
                     .frame(width: Dimensions.scoreCircle, height: Dimensions.scoreCircle)
                 Image(systemName: "checkmark")
-                    .font(.system(size: Dimensions.scoreTick, weight: .heavy))
+                    .font(.system(size: Dimensions.scoreTick, weight: FontWeights.scoreTick))
                     .foregroundColor(.black)
             case .half:
                 Circle()
                     .stroke(Colors.darkGray, lineWidth: Dimensions.scoreCircleBorder)
                     .frame(width: Dimensions.scoreCircle, height: Dimensions.scoreCircle)
                 Image(systemName: "checkmark")
-                    .font(.system(size: Dimensions.scoreTick, weight: .heavy))
+                    .font(.system(size: Dimensions.scoreTick, weight: FontWeights.scoreTick))
                     .foregroundColor(Colors.highlight)
             }
         }
@@ -312,14 +319,15 @@ struct ResultsView: View {
         ZStack {
             Text("End")
                 .font(.custom(Constants.fontFace, size: FontSizes.title))
-                .fontWeight(.light)
+                .fontWeight(FontWeights.title)
                 .foregroundColor(Colors.text)
 
             Text("Total score: \(scoreString)")
-                .font(.custom(Constants.fontFace, size: FontSizes.score))
-                .fontWeight(.regular)
+                .font(.custom(Constants.fontFace, size: FontSizes.subTitle))
+                .fontWeight(FontWeights.subTitle)
                 .foregroundColor(Colors.highlight)
-                .padding(.top, 300)
+                .padding(.top, 400)
+                .textCase(.uppercase)
         }
         .fillParentCentered()
     }

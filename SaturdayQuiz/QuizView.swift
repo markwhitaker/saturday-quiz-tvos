@@ -72,7 +72,7 @@ struct QuizView: View {
                 case .answersTitle:
                     AnswersTitleView()
                 case .questionAnswer(let number, let type, let question, let answer):
-                    QuestionAndAnswerView(
+                    QuestionView(
                         number: number,
                         type: type,
                         question: question,
@@ -165,62 +165,18 @@ struct QuestionView: View {
     let number: Int
     let isWhatLinks: Bool
     let question: String
-    
+    let answer: String?
+    let score: ScoreState?
+
     init(number: Int, type: QuestionType, question: String) {
         self.number = number
         self.question = question
+        self.answer = nil
+        self.score = nil
         self.isWhatLinks = type == .whatLinks
-    }
-    
-    var body: some View {
-        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: Dimensions.gridSpacing) {
-            GridRow {
-                Color.clear.frame(width: 0, height: 0)
-                HStack(spacing: Dimensions.whatLinksSpacing) {
-                    Image(systemName: "link")
-                    Text("What links")
-                        .textCase(.uppercase)
-                }
-                .font(.custom(Constants.fontFace, size: FontSizes.whatLinks))
-                .fontWeight(FontWeights.whatLinks)
-                .foregroundStyle(Colors.midGray)
-                .opacity(isWhatLinks ? 1 : 0)
-            }
 
-            GridRow {
-                Text("\(number).")
-                    .frame(width: Dimensions.numberWidth, alignment: .topLeading)
-                Text(question)
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-            }
-            .font(.custom(Constants.fontFace, size: FontSizes.body))
-            .fontWeight(FontWeights.body)
-            .foregroundStyle(Colors.text)
-        }
-        .fillParentTopLeft()
-        .padding(Dimensions.outerSpacing)
     }
-}
 
-struct AnswersTitleView: View {
-    var body: some View {
-        ZStack {
-            Text("Answers")
-                .font(.custom(Constants.fontFace, size: FontSizes.title))
-                .fontWeight(FontWeights.title)
-                .foregroundColor(Colors.text)
-        }
-        .fillParentCentered()
-    }
-}
-
-struct QuestionAndAnswerView: View {
-    let number: Int
-    let isWhatLinks: Bool
-    let question: String
-    let answer: String
-    let score: ScoreState
-    
     init(number: Int, type: QuestionType, question: String, answer: String, score: ScoreState) {
         self.number = number
         self.question = question
@@ -249,32 +205,44 @@ struct QuestionAndAnswerView: View {
                     Text("\(number).")
                         .frame(width: Dimensions.numberWidth, alignment: .topLeading)
                     Text(question)
-                        .frame(maxWidth: .infinity, alignment: .topLeading)
                 }
                 .font(.custom(Constants.fontFace, size: FontSizes.body))
                 .fontWeight(FontWeights.body)
                 .foregroundStyle(Colors.text)
 
-                GridRow {
-                    Color.clear.frame(width: 0, height: 0)
-                    Text(answer)
-                        .lineLimit(nil)
-                        .fillParentTopLeft()
+                if (answer != nil) {
+                    GridRow {
+                        Color.clear.frame(width: 0, height: 0)
+                        Text(answer!)
+                    }
+                    .font(.custom(Constants.fontFace, size: FontSizes.body))
+                    .fontWeight(FontWeights.body)
+                    .foregroundStyle(Colors.highlight)
                 }
-                .font(.custom(Constants.fontFace, size: FontSizes.body))
-                .fontWeight(FontWeights.body)
-                .foregroundStyle(Colors.highlight)
-
             }
             .fillParentTopLeft()
 
-            ZStack {
-                ScoreIndicatorView(score: score)
+            if (score != nil) {
+                ZStack {
+                    ScoreIndicatorView(score: score!)
+                }
+                .fillParentBottomLeft()
             }
-            .fillParentBottomLeft()
         }
         .fillParentTopLeft()
         .padding(Dimensions.outerSpacing)
+    }
+}
+
+struct AnswersTitleView: View {
+    var body: some View {
+        ZStack {
+            Text("Answers")
+                .font(.custom(Constants.fontFace, size: FontSizes.title))
+                .fontWeight(FontWeights.title)
+                .foregroundColor(Colors.text)
+        }
+        .fillParentCentered()
     }
 }
 
@@ -370,14 +338,14 @@ struct ResultsView: View {
 
 #Preview("Question/answer view: normal") {
     ZStack {
-        QuestionAndAnswerView(number: 4, type: .normal, question: "Which sci-fi writer was the first person in Europe to buy a Mac computer?", answer: "Douglas Adams (Stephen Fry was the second)", score: .full)
+        QuestionView(number: 4, type: .normal, question: "Which sci-fi writer was the first person in Europe to buy a Mac computer?", answer: "Douglas Adams (Stephen Fry was the second)", score: .full)
     }
     .fillParentTopLeft()
 }
 
 #Preview("Question/answer view: what links") {
     ZStack {
-        QuestionAndAnswerView(number: 10, type: .whatLinks, question: "Star patterns; time travel in Hill Valley; piano; neo-Nazi code?", answer: "88: 88 constellations recognised by the International Astronomical Union; DeLorean’s 88mph in Back to the Future; 88 keys; numerical code for “Heil Hitler”", score: .half)
+        QuestionView(number: 10, type: .whatLinks, question: "Star patterns; time travel in Hill Valley; piano; neo-Nazi code? also some other rather long-winded things going all around the houses to push this out to multiple lines", answer: "88: 88 constellations recognised by the International Astronomical Union; DeLorean’s 88mph in Back to the Future; 88 keys; numerical code for “Heil Hitler”", score: .half)
     }
     .fillParentTopLeft()
 }

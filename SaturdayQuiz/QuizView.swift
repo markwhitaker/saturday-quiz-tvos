@@ -230,48 +230,48 @@ struct QuestionAndAnswerView: View {
     }
     
     var body: some View {
-        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: Dimensions.gridSpacing) {
-            GridRow {
-                Color.clear.frame(width: 0, height: 0)
-                HStack(spacing: Dimensions.whatLinksSpacing) {
-                    Image(systemName: "link")
-                    Text("What links")
-                        .textCase(.uppercase)
+        ZStack {
+            Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: Dimensions.gridSpacing) {
+                GridRow {
+                    Color.clear.frame(width: 0, height: 0)
+                    HStack(spacing: Dimensions.whatLinksSpacing) {
+                        Image(systemName: "link")
+                        Text("What links")
+                            .textCase(.uppercase)
+                    }
+                    .font(.custom(Constants.fontFace, size: FontSizes.whatLinks))
+                    .fontWeight(FontWeights.whatLinks)
+                    .foregroundStyle(Colors.midGray)
+                    .opacity(isWhatLinks ? 1 : 0)
                 }
-                .font(.custom(Constants.fontFace, size: FontSizes.whatLinks))
-                .fontWeight(FontWeights.whatLinks)
-                .foregroundStyle(Colors.midGray)
-                .opacity(isWhatLinks ? 1 : 0)
-            }
 
-            GridRow {
-                Text("\(number).")
-                    .frame(width: Dimensions.numberWidth, alignment: .topLeading)
-                Text(question)
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-            }
-            .font(.custom(Constants.fontFace, size: FontSizes.body))
-            .fontWeight(FontWeights.body)
-            .foregroundStyle(Colors.text)
-
-            GridRow {
-                Color.clear.frame(width: 0, height: 0)
-                Text(answer)
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-            }
-            .font(.custom(Constants.fontFace, size: FontSizes.body))
-            .fontWeight(FontWeights.body)
-            .foregroundStyle(Colors.highlight)
-
-            GridRow {
-                VStack {
-                    Spacer()
+                GridRow {
+                    Text("\(number).")
+                        .frame(width: Dimensions.numberWidth, alignment: .topLeading)
+                    Text(question)
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
                 }
-            }
+                .font(.custom(Constants.fontFace, size: FontSizes.body))
+                .fontWeight(FontWeights.body)
+                .foregroundStyle(Colors.text)
 
-            GridRow {
+                GridRow {
+                    Color.clear.frame(width: 0, height: 0)
+                    Text(answer)
+                        .lineLimit(nil)
+                        .fillParentTopLeft()
+                }
+                .font(.custom(Constants.fontFace, size: FontSizes.body))
+                .fontWeight(FontWeights.body)
+                .foregroundStyle(Colors.highlight)
+
+            }
+            .fillParentTopLeft()
+
+            ZStack {
                 ScoreIndicatorView(score: score)
             }
+            .fillParentBottomLeft()
         }
         .fillParentTopLeft()
         .padding(Dimensions.outerSpacing)
@@ -377,7 +377,7 @@ struct ResultsView: View {
 
 #Preview("Question/answer view: what links") {
     ZStack {
-        QuestionAndAnswerView(number: 10, type: .whatLinks, question: "Observatory Circle resident; reclusive New Hampshire author; Tim Martin's pubs; Wardle and Makin's shops?", answer: "JD: JD Vance; JD Salinger; JD Wetherspoon; JD Sports", score: .half)
+        QuestionAndAnswerView(number: 10, type: .whatLinks, question: "Star patterns; time travel in Hill Valley; piano; neo-Nazi code?", answer: "88: 88 constellations recognised by the International Astronomical Union; DeLorean’s 88mph in Back to the Future; 88 keys; numerical code for “Heil Hitler”", score: .half)
     }
     .fillParentTopLeft()
 }

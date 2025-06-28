@@ -10,10 +10,26 @@ import SwiftUI
 
 extension View {
     func fillParentCentered() -> some View {
-        return self.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        return self.frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .center
+        )
     }
-    
+
     func fillParentTopLeft() -> some View {
-        return self.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        return self.frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .topLeading
+        )
+    }
+
+    func fillParentBottomLeft() -> some View {
+        return self.frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .bottomLeading
+        )
     }
 }

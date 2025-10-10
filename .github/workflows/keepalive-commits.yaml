@@ -1,0 +1,29 @@
+name: Monthly keepalive commit
+on:
+  schedule:
+    - cron: "0 06 1 * *"   # 06:00 UTC on the 1st each month
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Update keepalive stamp
+        run: |
+          echo "Last keepalive: $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > .keepalive
+      - name: Commit and push if changed
+        run: |
+          git add .keepalive
+          if git diff --cached --quiet; then
+            echo "No changes"; exit 0
+          fi
+          git commit -m "chore: monthly keepalive"
+          git push

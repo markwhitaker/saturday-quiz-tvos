@@ -25,5 +25,5 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes"; exit 0
           fi
-          git commit -m "chore: monthly keepalive"
+          git commit -m "Monthly keepalive commit"
           git push

@@ -15,4 +15,24 @@ class ScoreFormatter {
         }
         return scoreString
     }
+
+    static func formatCorrectList(scores: [ScoreState]) -> String {
+        let items = scores.enumerated().compactMap { (index, state) -> String? in
+            switch state {
+            case .full:
+                return "\(index + 1)"
+            case .half:
+                return "\(index + 1) (half)"
+            case .none:
+                return nil
+            }
+        }
+        return items.joined(separator: ", ")
+    }
+
+    static func qrPayload(score: Double, scores: [ScoreState]) -> String {
+        let scoreStr = formatScore(score)
+        let list = formatCorrectList(scores: scores)
+        return "\(scoreStr)\n\n\(list)"
+    }
 }

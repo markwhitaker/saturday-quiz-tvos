@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import UIKit
 
 struct FontSizes {
     static let title: CGFloat = 120
@@ -30,6 +33,7 @@ struct Dimensions {
     static let scoreTick: CGFloat = 50
     static let scoreCircleBorder: CGFloat = 3
     static let whatLinksSpacing: CGFloat = 10
+    static let qrCodeSize: CGFloat = 180
 }
 
 struct Colors {
@@ -52,7 +56,7 @@ struct QuizView: View {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMM yyyy"
         return dateFormatter
-    }
+    }()
 
     var body: some View {
         ZStack {
@@ -78,8 +82,8 @@ struct QuizView: View {
                         question: question,
                         answer: answer,
                         score: presenter.scores[number - 1])
-                case .results:
-                    ResultsView(score: presenter.totalScore)
+                case .results(let score, let scores):
+                    ResultsView(score: score, scores: scores)
                 }
             }
             .foregroundStyle(Colors.text)
@@ -278,9 +282,13 @@ struct ScoreIndicatorView: View {
 
 struct ResultsView: View {
     let scoreString: String
+    let qrText: String
+    let scores: [ScoreState]
     
-    init(score: Double) {
-        scoreString = ScoreFormatter.formatScore(score)
+    init(score: Double, scores: [ScoreState]) {
+        self.scores = scores
+        self.scoreString = ScoreFormatter.formatScore(score)
+        self.qrText = ScoreFormatter.qrPayload(score: score, scores: scores)
     }
     
     var body: some View {
@@ -296,8 +304,29 @@ struct ResultsView: View {
                 .foregroundColor(Colors.highlight)
                 .padding(.top, 400)
                 .textCase(.uppercase)
+            
+            QRCodeView(text: qrText)
+                .frame(width: Dimensions.qrCodeSize, height: Dimensions.qrCodeSize)
+                .padding(.trailing, Dimensions.outerSpacing)
+                .padding(.bottom, Dimensions.outerSpacing)
+                .fillParentBottomRight()
         }
         .fillParentCentered()
+    }
+}
+
+struct QRCodeView: View {
+    let text: String
+
+    var body: some View {
+        if let image = QrCodeGenerator().generateQRCode(from: text) {
+            Image(uiImage: image)
+                .interpolation(.none)
+                .resizable()
+                .scaledToFit()
+        } else {
+            Color.clear
+        }
     }
 }
 
@@ -352,7 +381,8 @@ struct ResultsView: View {
 
 #Preview("Results view") {
     ZStack {
-        ResultsView(score: 10.5)
+        ResultsView(score: 10.5, scores: [.full, .full, .full, .full, .full, .full, .full, .full, .full, .full, .half, .none, .none, .none, .none])
     }
     .fillParentTopLeft()
 }
+

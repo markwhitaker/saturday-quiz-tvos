@@ -13,7 +13,7 @@ enum QuizScene {
     case question(number: Int, type: QuestionType, question: String)
     case answersTitle
     case questionAnswer(number: Int, type: QuestionType, question: String, answer: String)
-    case results(score: Double, scores: [ScoreState])
+    case results
 }
 
 enum ScoreState: Double, CaseIterable, Codable {
@@ -114,7 +114,7 @@ class QuizPresenter : ObservableObject {
                 answer: question.answer))
         }
 
-        scenes.append(.results(score: totalScore, scores: scores))
+        scenes.append(.results)
 
         scenes.remove(at: 0)
     }

@@ -33,7 +33,7 @@ struct Dimensions {
     static let scoreTick: CGFloat = 50
     static let scoreCircleBorder: CGFloat = 3
     static let whatLinksSpacing: CGFloat = 10
-    static let qrCodeSize: CGFloat = 180
+    static let qrCodeSize: CGFloat = 200
 }
 
 struct Colors {
@@ -82,8 +82,8 @@ struct QuizView: View {
                         question: question,
                         answer: answer,
                         score: presenter.scores[number - 1])
-                case .results(let score, let scores):
-                    ResultsView(score: score, scores: scores)
+                case .results:
+                    ResultsView(score: presenter.totalScore, scores: presenter.scores)
                 }
             }
             .foregroundStyle(Colors.text)

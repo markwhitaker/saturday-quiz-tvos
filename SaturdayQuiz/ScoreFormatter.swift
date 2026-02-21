@@ -19,7 +19,7 @@ class ScoreFormatter {
     static func qrPayload(score: Double, scores: [ScoreState]) -> String {
         let scoreStr = formatScore(score)
         let list = formatCorrectList(scores: scores)
-        return "\(scoreStr)\n\n\(list)"
+        return "\(scoreStr)...\n\n\(list)"
     }
 
     private static func formatCorrectList(scores: [ScoreState]) -> String {

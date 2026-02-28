@@ -76,6 +76,10 @@ All design constants are centralized at the top of QuizView.swift:
 
 The whatLinks question type displays a special "WHAT LINKS" indicator above the question text.
 
+## Dependencies
+
+- **QRCode** ([dagronf/qrcode](https://github.com/dagronf/qrcode)): Used to generate QR codes in the results scene. Added as a Swift Package Manager dependency.
+
 ## Custom Fonts
 
 The app uses "Open Sans" variable font from `assets/OpenSans-Variable.ttf`. Font must be registered in Info.plist and referenced as "Open Sans" in code.

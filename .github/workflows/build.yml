@@ -15,4 +15,5 @@ jobs:
             -scheme SaturdayQuiz \
             -configuration Debug \
             -destination 'generic/platform=tvOS' \
+            CODE_SIGNING_ALLOWED=NO \
             build

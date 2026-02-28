@@ -335,6 +335,7 @@ struct QRCodeView: View {
                 .interpolation(.none)
                 .resizable()
                 .scaledToFit()
+                .colorMultiply(Colors.highlight)
         } else {
             Color.clear
         }

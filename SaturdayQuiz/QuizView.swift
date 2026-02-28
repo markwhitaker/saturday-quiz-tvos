@@ -33,7 +33,6 @@ struct Dimensions {
     static let scoreTick: CGFloat = 50
     static let scoreCircleBorder: CGFloat = 3
     static let whatLinksSpacing: CGFloat = 10
-    static let qrCodeSize: CGFloat = 500
 }
 
 struct Colors {
@@ -320,9 +319,7 @@ struct ShareResultsView : View {
     var body: some View {
         ZStack {
             QRCodeView(text: qrText)
-                .frame(width: Dimensions.qrCodeSize, height: Dimensions.qrCodeSize)
-                .padding(.trailing, Dimensions.outerSpacing)
-                .padding(.bottom, Dimensions.outerSpacing)
+                .padding(150)
                 .fillParentCentered()
         }
         .fillParentCentered()

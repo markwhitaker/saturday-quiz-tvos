@@ -33,7 +33,7 @@ struct Dimensions {
     static let scoreTick: CGFloat = 50
     static let scoreCircleBorder: CGFloat = 3
     static let whatLinksSpacing: CGFloat = 10
-    static let qrCodeSize: CGFloat = 200
+    static let qrCodeSize: CGFloat = 500
 }
 
 struct Colors {
@@ -84,6 +84,8 @@ struct QuizView: View {
                         score: presenter.scores[number - 1])
                 case .results:
                     ResultsView(score: presenter.totalScore, scores: presenter.scores)
+                case .shareResults:
+                    ShareResultsView(score: presenter.totalScore, scores: presenter.scores)
                 }
             }
             .foregroundStyle(Colors.text)
@@ -282,13 +284,11 @@ struct ScoreIndicatorView: View {
 
 struct ResultsView: View {
     let scoreString: String
-    let qrText: String
     let scores: [ScoreState]
     
     init(score: Double, scores: [ScoreState]) {
         self.scores = scores
         self.scoreString = ScoreFormatter.formatScore(score)
-        self.qrText = ScoreFormatter.qrPayload(score: score, scores: scores)
     }
     
     var body: some View {
@@ -305,11 +305,25 @@ struct ResultsView: View {
                 .padding(.top, 400)
                 .textCase(.uppercase)
             
+        }
+        .fillParentCentered()
+    }
+}
+
+struct ShareResultsView : View {
+    let qrText: String
+    
+    init(score: Double, scores: [ScoreState]) {
+        self.qrText = ScoreFormatter.qrPayload(score: score, scores: scores)
+    }
+    
+    var body: some View {
+        ZStack {
             QRCodeView(text: qrText)
                 .frame(width: Dimensions.qrCodeSize, height: Dimensions.qrCodeSize)
                 .padding(.trailing, Dimensions.outerSpacing)
                 .padding(.bottom, Dimensions.outerSpacing)
-                .fillParentBottomRight()
+                .fillParentCentered()
         }
         .fillParentCentered()
     }
@@ -386,3 +400,9 @@ struct QRCodeView: View {
     .fillParentTopLeft()
 }
 
+#Preview("Share results view") {
+    ZStack {
+        ShareResultsView(score: 10.5, scores: [.full, .full, .full, .full, .full, .full, .full, .full, .full, .full, .half, .none, .none, .none, .none])
+    }
+    .fillParentTopLeft()
+}

@@ -14,6 +14,7 @@ enum QuizScene {
     case answersTitle
     case questionAnswer(number: Int, type: QuestionType, question: String, answer: String)
     case results
+    case shareResults
 }
 
 enum ScoreState: Double, CaseIterable, Codable {
@@ -115,7 +116,10 @@ class QuizPresenter : ObservableObject {
         }
 
         scenes.append(.results)
+        
+        scenes.append(.shareResults)
 
+        // Remove the loading scene
         scenes.remove(at: 0)
     }
 

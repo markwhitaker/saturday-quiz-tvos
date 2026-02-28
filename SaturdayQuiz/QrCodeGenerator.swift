@@ -19,6 +19,8 @@ struct QrCodeGenerator {
                .backgroundColor(Color.black.cgColor!)
                .onPixels.shape(QRCode.PixelShape.CurvePixel())
                .eye.shape(QRCode.EyeShape.Squircle())
+               .logo(image: UIImage(named: "QRCodeLogo")!.cgImage!)
+               .errorCorrection(.high)
                .generate.image(dimension: 600)
             
             return UIImage(cgImage: cgImage)

@@ -32,12 +32,4 @@ extension View {
             alignment: .bottomLeading
         )
     }
-
-    func fillParentBottomRight() -> some View {
-        return self.frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity,
-            alignment: .bottomTrailing
-        )
-    }
 }

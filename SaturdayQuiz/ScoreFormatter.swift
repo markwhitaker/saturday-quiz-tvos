@@ -19,7 +19,8 @@ class ScoreFormatter {
     static func qrPayload(score: Double, scores: [ScoreState]) -> String {
         let scoreStr = formatScore(score)
         let list = formatCorrectList(scores: scores)
-        return "\(scoreStr)...\n\n\(list)"
+        let message = "\(scoreStr)...\n\n\(list)"
+        return "whatsapp://send?text=\(message.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
     }
 
     private static func formatCorrectList(scores: [ScoreState]) -> String {

@@ -18,9 +18,9 @@ struct FontSizes {
 }
 
 struct FontWeights {
-    static let title: Font.Weight = .light
-    static let subTitle: Font.Weight = .regular
-    static let body: Font.Weight = .light
+    static let title: Font.Weight = .regular
+    static let subTitle: Font.Weight = .semibold
+    static let body: Font.Weight = .regular
     static let whatLinks: Font.Weight = .bold
     static let scoreTick: Font.Weight = .heavy
 }

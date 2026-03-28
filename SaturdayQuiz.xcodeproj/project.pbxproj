@@ -66,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				4D4923EE2DEAFD0400BFF49E /* SaturdayQuiz */,
+				05AA933F833449ED93F80622 /* SaturdayQuizTests */,
 				4D4923ED2DEAFD0400BFF49E /* Products */,
 				4D9305732E052FF600E80B54 /* OpenSans-Variable.ttf */,
 			);

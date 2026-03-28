@@ -14,6 +14,7 @@
 /* Begin PBXFileReference section */
 		4D4923EC2DEAFD0400BFF49E /* SaturdayQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaturdayQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D9305732E052FF600E80B54 /* OpenSans-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Variable.ttf"; path = "assets/OpenSans-Variable.ttf"; sourceTree = "<group>"; };
+		8388D50DB0EA4588A02106BD /* SaturdayQuizTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaturdayQuizTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -35,6 +36,11 @@
 			path = SaturdayQuiz;
 			sourceTree = "<group>";
 		};
+		05AA933F833449ED93F80622 /* SaturdayQuizTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SaturdayQuizTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +49,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D8FDB772F53001B008C248E /* QRCode in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C24CB4773054CA7A5E3934F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				4D4923EC2DEAFD0400BFF49E /* SaturdayQuiz.app */,
+				8388D50DB0EA4588A02106BD /* SaturdayQuizTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +106,26 @@
 			productReference = 4D4923EC2DEAFD0400BFF49E /* SaturdayQuiz.app */;
 			productType = "com.apple.product-type.application";
 		};
+		0B0D0927FC1948FD8C44CE5D /* SaturdayQuizTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6802FB89E9A14A6BBCF10B7D /* Build configuration list for PBXNativeTarget "SaturdayQuizTests" */;
+			buildPhases = (
+				2360239D63F549148467DE90 /* Sources */,
+				9C24CB4773054CA7A5E3934F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A0A478CFE3D344A89E7F13F4 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				05AA933F833449ED93F80622 /* SaturdayQuizTests */,
+			);
+			name = SaturdayQuizTests;
+			productName = SaturdayQuizTests;
+			productReference = 8388D50DB0EA4588A02106BD /* SaturdayQuizTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -104,6 +138,10 @@
 				TargetAttributes = {
 					4D4923EB2DEAFD0400BFF49E = {
 						CreatedOnToolsVersion = 16.4;
+					};
+					0B0D0927FC1948FD8C44CE5D = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 4D4923EB2DEAFD0400BFF49E;
 					};
 				};
 			};
@@ -125,6 +163,7 @@
 			projectRoot = "";
 			targets = (
 				4D4923EB2DEAFD0400BFF49E /* SaturdayQuiz */,
+				0B0D0927FC1948FD8C44CE5D /* SaturdayQuizTests */,
 			);
 		};
 /* End PBXProject section */
@@ -148,7 +187,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2360239D63F549148467DE90 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXContainerItemProxy section */
+		098988597BC449FAA4975605 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D4923E42DEAFD0400BFF49E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D4923EB2DEAFD0400BFF49E;
+			remoteInfo = SaturdayQuiz;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXTargetDependency section */
+		A0A478CFE3D344A89E7F13F4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D4923EB2DEAFD0400BFF49E /* SaturdayQuiz */;
+			targetProxy = 098988597BC449FAA4975605 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4D4923F52DEAFD0700BFF49E /* Debug */ = {
@@ -328,6 +392,44 @@
 			};
 			name = Release;
 		};
+		07D827534E634DA6922D7D9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.bitrot.TheQuiz.Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaturdayQuiz.app/SaturdayQuiz";
+			};
+			name = Debug;
+		};
+		184CBB01390A4D64A775C3AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.bitrot.TheQuiz.Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaturdayQuiz.app/SaturdayQuiz";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -345,6 +447,15 @@
 			buildConfigurations = (
 				4D4923F82DEAFD0700BFF49E /* Debug */,
 				4D4923F92DEAFD0700BFF49E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6802FB89E9A14A6BBCF10B7D /* Build configuration list for PBXNativeTarget "SaturdayQuizTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07D827534E634DA6922D7D9A /* Debug */,
+				184CBB01390A4D64A775C3AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

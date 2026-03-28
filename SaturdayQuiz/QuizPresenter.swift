@@ -43,8 +43,15 @@ class QuizPresenter : ObservableObject {
     @Published var quizMetadata: [QuizMetadata] = []
     @Published var pickerSelectedIndex: Int = 0
 
-    private let userDefaults = UserDefaults.standard
+    private let service: QuizServiceProtocol
+    private let userDefaults: UserDefaults
     private let scoresKeyPrefix = "quiz_scores_"
+
+    init(service: QuizServiceProtocol = QuizService(), userDefaults: UserDefaults = .standard) {
+        self.service = service
+        self.userDefaults = userDefaults
+    }
+
     private let scoresKeyDateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -65,62 +72,27 @@ class QuizPresenter : ObservableObject {
     }
 
     private func fetchCurrentQuiz() {
-        guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz") else { return }
-
-        debugPrint("Requesting quiz data from \(url)")
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    debugPrint("Network error: \(error.localizedDescription)")
-                    return
-                }
-
-                guard let data = data else {
-                    debugPrint("No data received")
-                    return
-                }
-
-                do {
-                    let jsonDecoder = JSONDecoder()
-                    jsonDecoder.dateDecodingStrategy = .iso8601
-
-                    let decodedQuiz = try jsonDecoder.decode(Quiz.self, from: data)
-
-                    self.quiz = decodedQuiz
-                    let scoresStored = self.initializeScores()
-                    self.buildScenes(skipToAnswers: scoresStored)
-                } catch {
-                    debugPrint("Failed to decode quiz: \(error.localizedDescription)")
-                }
+        service.fetchCurrentQuiz { result in
+            switch result {
+            case .success(let quiz):
+                self.quiz = quiz
+                let scoresStored = self.initializeScores()
+                self.buildScenes(skipToAnswers: scoresStored)
+            case .failure(let error):
+                debugPrint("Network error fetching quiz: \(error.localizedDescription)")
             }
-        }.resume()
+        }
     }
 
     private func fetchQuizMetadata() {
-        guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz-metadata") else { return }
-
-        debugPrint("Requesting quiz metadata from \(url)")
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    debugPrint("Quiz metadata network error: \(error.localizedDescription)")
-                    return
-                }
-
-                guard let data = data else {
-                    debugPrint("No quiz metadata received")
-                    return
-                }
-
-                do {
-                    let jsonDecoder = JSONDecoder()
-                    jsonDecoder.dateDecodingStrategy = .iso8601
-                    self.quizMetadata = try jsonDecoder.decode([QuizMetadata].self, from: data)
-                } catch {
-                    debugPrint("Failed to decode quiz metadata: \(error.localizedDescription)")
-                }
+        service.fetchQuizMetadata { result in
+            switch result {
+            case .success(let metadata):
+                self.quizMetadata = metadata
+            case .failure(let error):
+                debugPrint("Network error fetching quiz metadata: \(error.localizedDescription)")
             }
-        }.resume()
+        }
     }
 
     private func buildScenes(skipToAnswers: Bool) {
@@ -231,33 +203,16 @@ class QuizPresenter : ObservableObject {
         scenes = [.loading]
         sceneIndex = 0
 
-        guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz/\(dateString)") else { return }
-
-        debugPrint("Loading quiz for date \(dateString)")
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    debugPrint("Network error loading quiz by date: \(error.localizedDescription)")
-                    return
-                }
-
-                guard let data = data else {
-                    debugPrint("No data received for quiz date \(dateString)")
-                    return
-                }
-
-                do {
-                    let jsonDecoder = JSONDecoder()
-                    jsonDecoder.dateDecodingStrategy = .iso8601
-                    let decodedQuiz = try jsonDecoder.decode(Quiz.self, from: data)
-                    self.quiz = decodedQuiz
-                    let scoresStored = self.initializeScores()
-                    self.buildScenes(skipToAnswers: scoresStored)
-                } catch {
-                    debugPrint("Failed to decode quiz for date \(dateString): \(error.localizedDescription)")
-                }
+        service.fetchQuiz(for: dateString) { result in
+            switch result {
+            case .success(let quiz):
+                self.quiz = quiz
+                let scoresStored = self.initializeScores()
+                self.buildScenes(skipToAnswers: scoresStored)
+            case .failure(let error):
+                debugPrint("Network error loading quiz for date \(dateString): \(error.localizedDescription)")
             }
-        }.resume()
+        }
     }
 
     private func getScoreStorageKey(date: Date) -> String {

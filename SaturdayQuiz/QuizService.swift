@@ -25,7 +25,7 @@ class QuizService: QuizServiceProtocol {
         guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz") else { return }
 
         debugPrint("Requesting quiz data from \(url)")
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             DispatchQueue.main.async {
                 if let error = error {
                     completion(.failure(error))
@@ -51,7 +51,7 @@ class QuizService: QuizServiceProtocol {
         guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz-metadata") else { return }
 
         debugPrint("Requesting quiz metadata from \(url)")
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             DispatchQueue.main.async {
                 if let error = error {
                     completion(.failure(error))
@@ -77,7 +77,7 @@ class QuizService: QuizServiceProtocol {
         guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz/\(dateString)") else { return }
 
         debugPrint("Loading quiz for date \(dateString)")
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             DispatchQueue.main.async {
                 if let error = error {
                     completion(.failure(error))

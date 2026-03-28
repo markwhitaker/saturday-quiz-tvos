@@ -15,6 +15,8 @@ struct FontSizes {
     static let body: CGFloat = 70
     static let whatLinks: CGFloat = 35
     static let subTitle: CGFloat = 50
+    static let pickerTitle: CGFloat = 55
+    static let pickerDate: CGFloat = 36
 }
 
 struct FontWeights {
@@ -33,6 +35,8 @@ struct Dimensions {
     static let scoreTick: CGFloat = 50
     static let scoreCircleBorder: CGFloat = 3
     static let whatLinksSpacing: CGFloat = 10
+    static let pickerItemSpacing: CGFloat = 2
+    static let pickerCornerRadius: CGFloat = 12
 }
 
 struct Colors {
@@ -65,6 +69,8 @@ struct QuizView: View {
                 switch presenter.currentScene {
                 case .loading:
                     LoadingView()
+                case .quizPicker:
+                    QuizPickerView(quizzes: presenter.quizMetadata, selectedIndex: presenter.pickerSelectedIndex)
                 case .ready(let date):
                     ReadyView(date: date)
                 case .question(let number, let type, let question):
@@ -98,20 +104,41 @@ struct QuizView: View {
             isFocused = true
         }
         .onMoveCommand { direction in
-            switch direction {
-            case .left:
-                presenter.previous()
-            case .right:
-                presenter.next()
-            default:
-                break
+            if case .quizPicker = presenter.currentScene {
+                switch direction {
+                case .up:
+                    presenter.pickerUp()
+                case .down:
+                    presenter.pickerDown()
+                case .right:
+                    presenter.next()
+                default:
+                    break
+                }
+            } else {
+                switch direction {
+                case .left:
+                    presenter.previous()
+                case .right:
+                    presenter.next()
+                default:
+                    break
+                }
             }
         }
         .onTapGesture {
-            presenter.cycleScore()
+            if case .quizPicker = presenter.currentScene {
+                presenter.selectPickerItem()
+            } else {
+                presenter.cycleScore()
+            }
         }
         .onPlayPauseCommand {
-            presenter.cycleScore()
+            if case .quizPicker = presenter.currentScene {
+                presenter.selectPickerItem()
+            } else {
+                presenter.cycleScore()
+            }
         }
     }
 }
@@ -338,6 +365,72 @@ struct QRCodeView: View {
         } else {
             Color.clear
         }
+    }
+}
+
+struct QuizPickerView: View {
+    let quizzes: [QuizMetadata]
+    let selectedIndex: Int
+
+    private let dateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM yyyy"
+        return formatter
+    }()
+
+    var body: some View {
+        if quizzes.isEmpty {
+            LoadingView()
+        } else {
+            ScrollViewReader { proxy in
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 4) {
+                        ForEach(Array(quizzes.enumerated()), id: \.offset) { index, quiz in
+                            QuizPickerRowView(
+                                date: dateFormatter.string(from: quiz.date),
+                                title: quiz.title.replacingOccurrences(of: " The Saturday quiz$", with: "", options: [.regularExpression, .caseInsensitive]),
+                                isSelected: index == selectedIndex
+                            )
+                            .id(index)
+                        }
+                    }
+                    .padding(Dimensions.outerSpacing)
+                }
+                .onAppear {
+                    proxy.scrollTo(selectedIndex, anchor: .center)
+                }
+                .onChange(of: selectedIndex) { newIndex in
+                    withAnimation {
+                        proxy.scrollTo(newIndex, anchor: .center)
+                    }
+                }
+            }
+            .fillParentTopLeft()
+        }
+    }
+}
+
+struct QuizPickerRowView: View {
+    let date: String
+    let title: String
+    let isSelected: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Dimensions.pickerItemSpacing) {
+            Text(date)
+                .font(.custom(Constants.fontFace, size: FontSizes.pickerDate))
+                .fontWeight(FontWeights.subTitle)
+                .foregroundColor(isSelected ? .black : Colors.midGray)
+            Text(title)
+                .font(.custom(Constants.fontFace, size: FontSizes.pickerTitle))
+                .fontWeight(FontWeights.body)
+                .foregroundColor(isSelected ? .black : Colors.text)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 40)
+        .padding(.vertical, 20)
+        .background(isSelected ? Colors.highlight : Color.clear)
+        .clipShape(RoundedRectangle(cornerRadius: Dimensions.pickerCornerRadius))
     }
 }
 

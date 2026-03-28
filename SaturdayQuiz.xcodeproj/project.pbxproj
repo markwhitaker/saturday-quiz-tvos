@@ -11,6 +11,16 @@
 		4D9305742E052FF600E80B54 /* OpenSans-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D9305732E052FF600E80B54 /* OpenSans-Variable.ttf */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		098988597BC449FAA4975605 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D4923E42DEAFD0400BFF49E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D4923EB2DEAFD0400BFF49E;
+			remoteInfo = SaturdayQuiz;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		4D4923EC2DEAFD0400BFF49E /* SaturdayQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaturdayQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D9305732E052FF600E80B54 /* OpenSans-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Variable.ttf"; path = "assets/OpenSans-Variable.ttf"; sourceTree = "<group>"; };
@@ -28,17 +38,17 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		05AA933F833449ED93F80622 /* SaturdayQuizTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SaturdayQuizTests;
+			sourceTree = "<group>";
+		};
 		4D4923EE2DEAFD0400BFF49E /* SaturdayQuiz */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				4D93059E2E0531E900E80B54 /* Exceptions for "SaturdayQuiz" folder in "SaturdayQuiz" target */,
 			);
 			path = SaturdayQuiz;
-			sourceTree = "<group>";
-		};
-		05AA933F833449ED93F80622 /* SaturdayQuizTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SaturdayQuizTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -84,6 +94,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0B0D0927FC1948FD8C44CE5D /* SaturdayQuizTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6802FB89E9A14A6BBCF10B7D /* Build configuration list for PBXNativeTarget "SaturdayQuizTests" */;
+			buildPhases = (
+				2360239D63F549148467DE90 /* Sources */,
+				9C24CB4773054CA7A5E3934F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A0A478CFE3D344A89E7F13F4 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				05AA933F833449ED93F80622 /* SaturdayQuizTests */,
+			);
+			name = SaturdayQuizTests;
+			productName = SaturdayQuizTests;
+			productReference = 8388D50DB0EA4588A02106BD /* SaturdayQuizTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4D4923EB2DEAFD0400BFF49E /* SaturdayQuiz */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4D4923F72DEAFD0700BFF49E /* Build configuration list for PBXNativeTarget "SaturdayQuiz" */;
@@ -107,26 +137,6 @@
 			productReference = 4D4923EC2DEAFD0400BFF49E /* SaturdayQuiz.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0B0D0927FC1948FD8C44CE5D /* SaturdayQuizTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6802FB89E9A14A6BBCF10B7D /* Build configuration list for PBXNativeTarget "SaturdayQuizTests" */;
-			buildPhases = (
-				2360239D63F549148467DE90 /* Sources */,
-				9C24CB4773054CA7A5E3934F /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A0A478CFE3D344A89E7F13F4 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				05AA933F833449ED93F80622 /* SaturdayQuizTests */,
-			);
-			name = SaturdayQuizTests;
-			productName = SaturdayQuizTests;
-			productReference = 8388D50DB0EA4588A02106BD /* SaturdayQuizTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -135,14 +145,14 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
-					4D4923EB2DEAFD0400BFF49E = {
-						CreatedOnToolsVersion = 16.4;
-					};
 					0B0D0927FC1948FD8C44CE5D = {
 						CreatedOnToolsVersion = 16.4;
 						TestTargetID = 4D4923EB2DEAFD0400BFF49E;
+					};
+					4D4923EB2DEAFD0400BFF49E = {
+						CreatedOnToolsVersion = 16.4;
 					};
 				};
 			};
@@ -181,13 +191,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4D4923E82DEAFD0400BFF49E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2360239D63F549148467DE90 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -195,17 +198,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXContainerItemProxy section */
-		098988597BC449FAA4975605 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4D4923E42DEAFD0400BFF49E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4D4923EB2DEAFD0400BFF49E;
-			remoteInfo = SaturdayQuiz;
+		4D4923E82DEAFD0400BFF49E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXContainerItemProxy section */
+/* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		A0A478CFE3D344A89E7F13F4 /* PBXTargetDependency */ = {
@@ -216,6 +216,42 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		07D827534E634DA6922D7D9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.bitrot.TheQuiz.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaturdayQuiz.app/SaturdayQuiz";
+			};
+			name = Debug;
+		};
+		184CBB01390A4D64A775C3AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.bitrot.TheQuiz.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaturdayQuiz.app/SaturdayQuiz";
+			};
+			name = Release;
+		};
 		4D4923F52DEAFD0700BFF49E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -390,44 +426,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-			};
-			name = Release;
-		};
-		07D827534E634DA6922D7D9A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.bitrot.TheQuiz.Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaturdayQuiz.app/SaturdayQuiz";
-			};
-			name = Debug;
-		};
-		184CBB01390A4D64A775C3AF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.bitrot.TheQuiz.Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaturdayQuiz.app/SaturdayQuiz";
 			};
 			name = Release;
 		};

@@ -1,6 +1,8 @@
 name: Build
 
 on:
+  push:
+    branches: [main]
   pull_request:
 
 jobs:
@@ -17,3 +19,12 @@ jobs:
             -destination 'generic/platform=tvOS' \
             CODE_SIGNING_ALLOWED=NO \
             build
+      - name: Test
+        run: |
+          xcodebuild \
+            -project SaturdayQuiz.xcodeproj \
+            -scheme SaturdayQuiz \
+            -destination 'platform=tvOS Simulator,name=Apple TV' \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO \
+            test

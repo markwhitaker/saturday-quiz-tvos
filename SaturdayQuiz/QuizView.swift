@@ -399,9 +399,9 @@ struct QuizPickerView: View {
                 .onAppear {
                     proxy.scrollTo(selectedIndex, anchor: .center)
                 }
-                .onChange(of: selectedIndex) { newIndex in
+                .onChange(of: selectedIndex) { oldValue, newValue in
                     withAnimation {
-                        proxy.scrollTo(newIndex, anchor: .center)
+                        proxy.scrollTo(newValue, anchor: .center)
                     }
                 }
             }
@@ -496,3 +496,4 @@ struct QuizPickerRowView: View {
     }
     .fillParentTopLeft()
 }
+

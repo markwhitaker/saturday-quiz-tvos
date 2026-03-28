@@ -91,36 +91,37 @@ class QuizPresenter : ObservableObject {
     private func buildScenes(skipToAnswers: Bool) {
         guard let quiz = self.quiz else { return }
 
-        scenes.append(.ready(date: quiz.date))
+        var localScenes: [QuizScene] = []
+        
+        localScenes.append(.ready(date: quiz.date))
 
         if (!skipToAnswers) {
             for question in quiz.questions {
-                scenes.append(.question(
+                localScenes.append(.question(
                     number: question.number,
                     type: question.type,
                     question: question.question))
             }
-            scenes.append(.answersTitle)
+            localScenes.append(.answersTitle)
         }
 
         for question in quiz.questions {
-            scenes.append(.question(
+            localScenes.append(.question(
                 number: question.number,
                 type: question.type,
                 question: question.question))
-            scenes.append(.questionAnswer(
+            localScenes.append(.questionAnswer(
                 number: question.number,
                 type: question.type,
                 question: question.question,
                 answer: question.answer))
         }
 
-        scenes.append(.results)
+        localScenes.append(.results)
         
-        scenes.append(.shareResults)
+        localScenes.append(.shareResults)
 
-        // Remove the loading scene
-        scenes.remove(at: 0)
+        scenes = localScenes
     }
 
     private func initializeScores() -> Bool {

@@ -91,6 +91,12 @@ final class QuizPresenterTests: XCTestCase {
         presenter.previous()
         XCTAssertEqual(presenter.sceneIndex, 0)
     }
+    
+    func testNextAtLastSceneReturnsToReady() {
+        presenter.sceneIndex = presenter.scenes.count - 1
+        presenter.next()
+        XCTAssertEqual(presenter.sceneIndex, 1)
+    }
 
     // MARK: - Score cycling tests
 

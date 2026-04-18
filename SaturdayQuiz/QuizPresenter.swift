@@ -163,7 +163,8 @@ class QuizPresenter : ObservableObject {
         if (sceneIndex < scenes.count - 1) {
             sceneIndex += 1
         } else {
-            exit(0)
+            // Go back to the Ready screen (skip date picker at index 0)
+            sceneIndex = 1
         }
     }
 

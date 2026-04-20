@@ -22,7 +22,7 @@ class QuizService: QuizServiceProtocol {
     }
 
     func fetchCurrentQuiz(completion: @escaping (Result<Quiz, Error>) -> Void) {
-        guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz") else { return }
+        guard let url = URL(string: "https://quiz.bitrot.net/api/quiz") else { return }
 
         debugPrint("Requesting quiz data from \(url)")
         URLSession.shared.dataTask(with: url) { data, _, error in
@@ -48,7 +48,7 @@ class QuizService: QuizServiceProtocol {
     }
 
     func fetchQuizMetadata(completion: @escaping (Result<[QuizMetadata], Error>) -> Void) {
-        guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz-metadata") else { return }
+        guard let url = URL(string: "https://quiz.bitrot.net/api/quiz-metadata") else { return }
 
         debugPrint("Requesting quiz metadata from \(url)")
         URLSession.shared.dataTask(with: url) { data, _, error in
@@ -74,7 +74,7 @@ class QuizService: QuizServiceProtocol {
     }
 
     func fetchQuiz(for dateString: String, completion: @escaping (Result<Quiz, Error>) -> Void) {
-        guard let url = URL(string: "https://eaton-bitrot.koyeb.app/api/quiz/\(dateString)") else { return }
+        guard let url = URL(string: "https://quiz.bitrot.net/api/quiz/\(dateString)") else { return }
 
         debugPrint("Loading quiz for date \(dateString)")
         URLSession.shared.dataTask(with: url) { data, _, error in

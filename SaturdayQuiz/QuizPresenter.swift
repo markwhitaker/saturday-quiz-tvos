@@ -164,6 +164,7 @@ class QuizPresenter : ObservableObject {
             sceneIndex += 1
         } else {
             // Go back to the Ready screen (skip date picker at index 0)
+            buildScenes(skipToAnswers: true)
             sceneIndex = 1
         }
     }

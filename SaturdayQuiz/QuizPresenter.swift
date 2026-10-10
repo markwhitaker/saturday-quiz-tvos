@@ -42,6 +42,7 @@ class QuizPresenter : ObservableObject {
     @Published var sceneIndex = 0
     @Published var quizMetadata: [QuizMetadata] = []
     @Published var pickerSelectedIndex: Int = 0
+    private(set) var isLoadingPickerSelection = false
 
     private let service: QuizServiceProtocol
     private let userDefaults: UserDefaults
@@ -198,14 +199,14 @@ class QuizPresenter : ObservableObject {
     }
 
     func selectPickerItem() {
-        guard !quizMetadata.isEmpty else { return }
+        guard !quizMetadata.isEmpty, !isLoadingPickerSelection else { return }
         let selected = quizMetadata[pickerSelectedIndex]
         let dateString = scoresKeyDateFormatter.string(from: selected.date)
 
-        scenes = [.loading]
-        sceneIndex = 0
+        isLoadingPickerSelection = true
 
         service.fetchQuiz(for: dateString) { result in
+            defer { self.isLoadingPickerSelection = false }
             switch result {
             case .success(let quiz):
                 self.quiz = quiz

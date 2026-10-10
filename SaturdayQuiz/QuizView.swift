@@ -61,6 +61,13 @@ struct QuizView: View {
         return dateFormatter
     }()
 
+    private var isQuizPickerVisible: Bool {
+        if case .quizPicker = presenter.currentScene {
+            return true
+        }
+        return false
+    }
+
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
@@ -71,8 +78,10 @@ struct QuizView: View {
                     LoadingView()
                 case .quizPicker:
                     QuizPickerView(quizzes: presenter.quizMetadata, selectedIndex: presenter.pickerSelectedIndex)
+                        .transition(.move(edge: .leading))
                 case .ready(let date):
                     ReadyView(date: date)
+                        .transition(.move(edge: .trailing))
                 case .question(let number, let type, let question):
                     QuestionView(
                         number: number,
@@ -95,6 +104,8 @@ struct QuizView: View {
             }
             .foregroundStyle(Colors.text)
             .fillParentTopLeft()
+            .zIndex(1)
+            .animation(.easeInOut(duration: 0.3), value: isQuizPickerVisible)
         }
         .fillParentTopLeft()
         .focusable()
@@ -104,6 +115,7 @@ struct QuizView: View {
             isFocused = true
         }
         .onMoveCommand { direction in
+            guard !presenter.isLoadingPickerSelection else { return }
             if case .quizPicker = presenter.currentScene {
                 switch direction {
                 case .up:

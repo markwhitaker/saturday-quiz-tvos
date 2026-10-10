@@ -211,10 +211,7 @@ class QuizPresenter : ObservableObject {
             case .success(let quiz):
                 self.quiz = quiz
                 let scoresStored = self.initializeScores()
-                // Animate only once the selected quiz is ready, so both views slide together.
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    self.buildScenes(skipToAnswers: scoresStored)
-                }
+                self.buildScenes(skipToAnswers: scoresStored)
             case .failure(let error):
                 debugPrint("Network error loading quiz for date \(dateString): \(error.localizedDescription)")
             }

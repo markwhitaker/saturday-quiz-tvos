@@ -71,8 +71,10 @@ struct QuizView: View {
                     LoadingView()
                 case .quizPicker:
                     QuizPickerView(quizzes: presenter.quizMetadata, selectedIndex: presenter.pickerSelectedIndex)
+                        .transition(.move(edge: .leading))
                 case .ready(let date):
                     ReadyView(date: date)
+                        .transition(.move(edge: .trailing))
                 case .question(let number, let type, let question):
                     QuestionView(
                         number: number,
@@ -95,6 +97,7 @@ struct QuizView: View {
             }
             .foregroundStyle(Colors.text)
             .fillParentTopLeft()
+            .zIndex(1)
         }
         .fillParentTopLeft()
         .focusable()
@@ -104,6 +107,7 @@ struct QuizView: View {
             isFocused = true
         }
         .onMoveCommand { direction in
+            guard !presenter.isLoadingPickerSelection else { return }
             if case .quizPicker = presenter.currentScene {
                 switch direction {
                 case .up:
@@ -111,14 +115,22 @@ struct QuizView: View {
                 case .down:
                     presenter.pickerDown()
                 case .right:
-                    presenter.next()
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        presenter.next()
+                    }
                 default:
                     break
                 }
             } else {
                 switch direction {
                 case .left:
-                    presenter.previous()
+                    if case .ready = presenter.currentScene {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            presenter.previous()
+                        }
+                    } else {
+                        presenter.previous()
+                    }
                 case .right:
                     presenter.next()
                 default:

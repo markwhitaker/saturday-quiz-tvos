@@ -193,4 +193,26 @@ final class QuizPresenterTests: XCTestCase {
         presenter.selectPickerItem()
         XCTAssertEqual(mockService.fetchedQuizDateString, "1970-01-01")
     }
+
+    func testPickerRemainsVisibleUntilSelectedQuizLoads() {
+        let date = Date(timeIntervalSince1970: 0)
+        presenter.quizMetadata = [QuizMetadata(id: "1", date: date, title: "Q1")]
+        presenter.scenes = [.quizPicker]
+        mockService.quizResult = nil
+
+        presenter.selectPickerItem()
+
+        guard case .quizPicker = presenter.currentScene else {
+            return XCTFail("The list should stay visible while the selected quiz loads")
+        }
+        XCTAssertTrue(presenter.isLoadingPickerSelection)
+
+        mockService.quizCompletion?(.success(makeQuiz(date: date)))
+
+        guard case .ready(let readyDate) = presenter.currentScene else {
+            return XCTFail("The selected quiz should open at Ready after loading")
+        }
+        XCTAssertEqual(readyDate, date)
+        XCTAssertFalse(presenter.isLoadingPickerSelection)
+    }
 }

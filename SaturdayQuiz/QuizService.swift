@@ -15,6 +15,8 @@ protocol QuizServiceProtocol {
 
 class QuizService: QuizServiceProtocol {
 
+    private static let apiBaseURL = "https://quiz.bitrot.net/api"
+
     private func makeDecoder() -> JSONDecoder {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
@@ -22,7 +24,7 @@ class QuizService: QuizServiceProtocol {
     }
 
     func fetchCurrentQuiz(completion: @escaping (Result<Quiz, Error>) -> Void) {
-        guard let url = URL(string: "https://quiz.bitrot.net/api/quiz") else { return }
+        guard let url = URL(string: "\(Self.apiBaseURL)/quiz") else { return }
 
         debugPrint("Requesting quiz data from \(url)")
         URLSession.shared.dataTask(with: url) { data, _, error in
@@ -48,7 +50,7 @@ class QuizService: QuizServiceProtocol {
     }
 
     func fetchQuizMetadata(completion: @escaping (Result<[QuizMetadata], Error>) -> Void) {
-        guard let url = URL(string: "https://quiz.bitrot.net/api/quiz-metadata") else { return }
+        guard let url = URL(string: "\(Self.apiBaseURL)/quiz-metadata") else { return }
 
         debugPrint("Requesting quiz metadata from \(url)")
         URLSession.shared.dataTask(with: url) { data, _, error in
@@ -74,7 +76,7 @@ class QuizService: QuizServiceProtocol {
     }
 
     func fetchQuiz(for dateString: String, completion: @escaping (Result<Quiz, Error>) -> Void) {
-        guard let url = URL(string: "https://quiz.bitrot.net/api/quiz/\(dateString)") else { return }
+        guard let url = URL(string: "\(Self.apiBaseURL)/quiz/\(dateString)") else { return }
 
         debugPrint("Loading quiz for date \(dateString)")
         URLSession.shared.dataTask(with: url) { data, _, error in
